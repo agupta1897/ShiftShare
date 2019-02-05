@@ -1,2 +1,2 @@
-# CS-495
+# ShiftShare
 Repo for Ad Hoc
