@@ -8,6 +8,7 @@ Requirements:
         - Ability to check if this is a real Manager? 
             -Franchise Stores usually have unique storeID, can use that
             - {What to do with mon and pop store??}
+	        - Could use a random-number generator for an ID. -ME
 
     - Ability for Manager to add his employees
         -Forms to guide managers to achieve this (& Database)
@@ -20,6 +21,7 @@ Requirements:
     
     - Rate Employees 
         - Star Base Rating?
+            - Stars could be used for a visual aid. Could be numeric integer range of 0 - 5, with the average showed when searching employees. Maybe an optional text review explaining the rating. -ME
         - Something like What Uber does
 
 2) Employee Portal
@@ -27,17 +29,20 @@ Requirements:
         -(Use Firebase? Open to discusion)
 
     - Employee Personal Information Collection Forms & Database
+        - Will need to research Federal and State regulations on the collection of PII (Personally Identifiable Information). THIS IS A HEAVILY REGULATED ISSUE. -ME
 
     - Employee Open Schedule Time, Willingness to travel
 
-    - Rate Managers 
+    - Rate Managers
 
 
 3) Communication Platform Between Managers and Employees 
     - Support Basic Text
     - Or in App Chatting or both?
+        - Both if possible. In-app may be better, given some people still have pay-as-you-go plans that charge per text. -ME
     
 
 4) BroadCast Message to all employees if there is a opening for very high pay?? (manager totally needs someone else he'll loose his job XD) 
         - Open to discussion
             - Other Managers may hate this feature because they dont want employee on work time to leave for a higher paying job?
+            - If possible, could give the managers the ability to disable this feature for on-shift workers. Also, would need to define "high pay". Would this be user-defined? -ME
