@@ -1,0 +1,43 @@
+\\\\\\\\\\\\\\\\\\\\\\\\SHIFT SHARE//////////////////////  
+
+Requirements:
+
+1) Manager Portal
+    - SignUp/Login 
+        -(Use Firebase? Open to discusion)
+        - Ability to check if this is a real Manager? 
+            -Franchise Stores usually have unique storeID, can use that
+            - {What to do with mon and pop store??}
+
+    - Ability for Manager to add his employees
+        -Forms to guide managers to achieve this (& Database)
+        -Once a employee is addeded
+            - A WebService to send emails/Text to employee asking them to signUp
+
+    - A beautiful elegant Search 
+        - A location API for allowing cordinates for distance Search
+        - Multilevel Search - Franchise based 
+    
+    - Rate Employees 
+        - Star Base Rating?
+        - Something like What Uber does
+
+2) Employee Portal
+    - SignUp/Login
+        -(Use Firebase? Open to discusion)
+
+    - Employee Personal Information Collection Forms & Database
+
+    - Employee Open Schedule Time, Willingness to travel
+
+    - Rate Managers 
+
+
+3) Communication Platform Between Managers and Employees 
+    - Support Basic Text
+    - Or in App Chatting or both?
+    
+
+4) BroadCast Message to all employees if there is a opening for very high pay?? (manager totally needs someone else he'll loose his job XD) 
+        - Open to discussion
+            - Other Managers may hate this feature because they dont want employee on work time to leave for a higher paying job?
