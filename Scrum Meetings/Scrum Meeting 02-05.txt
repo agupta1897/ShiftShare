@@ -1,0 +1,24 @@
+Carter:
+1) Gone throught Andriod Stuio(AS). Practiced classwork. 
+2) Continuing going through AS. Brainstorming Project requirements.
+3) Couldn't run virtual AS on phone. 
+
+Brennan:
+1) Getting familiarized with AS and practiced with Spring2018 Hello World
+2) Setup all the environments and IDE needed
+3) Brushing up at the HTML
+
+
+Murray:
+
+1) Reading through documentation through AS, learning JAVA
+2) Continue learning Java, AS
+3) Trying to sleep more. Very hectic period.
+
+
+Amber:
+
+1) Created a flutter app. Understood basic Andriod App structure
+2) Familiarize with AS. Come up with basic feature sets needed for ShiftShare (Our Project's website)
+3) Getting my schedule to match with our team. 
+
