@@ -7,12 +7,12 @@ Requirements:
         -(Use Firebase? Open to discusion)
         - Ability to check if this is a real Manager? 
             -Franchise Stores usually have unique storeID, can use that
-            - {What to do with mon and pop store??}
+            - {What to do with mom and pop store??}
 	        - Could use a random-number generator for an ID. -ME
 
     - Ability for Manager to add his employees
         -Forms to guide managers to achieve this (& Database)
-        -Once a employee is addeded
+        -Once an employee is addeded
             - A WebService to send emails/Text to employee asking them to signUp
 
     - A beautiful elegant Search 
