@@ -3,3 +3,9 @@ Carter
 1) Brainstormed for PWEB
 2) Work on PWEB draft, begin work on ShiftShare
 3) Still having problems with AS emulator
+
+Murray
+1) Brainstormed ideas for PWEB/ShiftShare
+2) Assist with implementing ideas
+3) Finding ability to commit changes without conflicting due to limited Internet access.
+
