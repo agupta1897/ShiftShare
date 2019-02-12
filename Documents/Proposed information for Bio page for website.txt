@@ -1,4 +1,22 @@
 Bio Information for Website
+-Name: Murray Estes
+-Hometown: Jackson, AL
+-DOB: 6/19/1990
+-Languages: C, C++
+-Other interesting info: 
+
+-Name:
+-Hometown:
+-DOB:
+-Languages:
+-Other interesting info:
+
+-Name:
+-Hometown:
+-DOB:
+-Languages:
+-Other interesting info:
+
 -Name:
 -Hometown:
 -DOB:
