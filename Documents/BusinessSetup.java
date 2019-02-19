@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import business;
 
 public class Buisiness_Setup extends AppCompatActivity {
 
@@ -31,7 +32,9 @@ public class Buisiness_Setup extends AppCompatActivity {
                 String bsn_city = input_city.getText().toString();
                 String bsn_state = input_state.getText().toString();
                 String bsn_zip = input_zip.getText().toString();
-                //actual submit stuff here
+                String bsn_id = databaseManagers.push().getKey();
+                Business bsn = new Business(bsn_id, bsn_name, bsn_store_num, bsn_street, bsn_city, bsn_state, bsn_zip);
+                databaseManagers.child(id).setValue(bsn);
                 Toast.makeText(v.getContext(), "Data Submitted", Toast.LENGTH_SHORT).show();
 
             }
