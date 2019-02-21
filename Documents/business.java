@@ -1,3 +1,5 @@
+package com.example.firebasesetup;
+
 public class Business{
 
     private String id;
