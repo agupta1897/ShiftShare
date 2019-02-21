@@ -14,23 +14,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class MainActivity extends AppCompatActivity {
+public class ManagerSetup extends AppCompatActivity {
 
-EditText editTextName;
-EditText editTextEmail;
+    EditText editTextName;
+    EditText editTextEmail;
     EditText editTextPassword;
     EditText editTextContactNumber;
-Button btnAddManager;
+    Button btnAddManager;
 
 
-DatabaseReference databaseManagers;
+    DatabaseReference databaseManagers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
+        //databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
 
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -42,7 +42,7 @@ DatabaseReference databaseManagers;
         btnAddManager.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view){
-            addManager();
+                addManager();
             }
         });
     }
