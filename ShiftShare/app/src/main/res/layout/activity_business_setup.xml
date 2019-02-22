@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
     <EditText
-        android:id="@+id/txt_input_bsn_name"
+        android:id="@+id/input_bsn_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -48,12 +48,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
         android:text="Store Number (Optional)"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_input_bsn_name" />
+        app:layout_constraintTop_toBottomOf="@+id/input_bsn_name" />
 
     <EditText
         android:id="@+id/input_str_num"
@@ -84,7 +82,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:ems="10"
         android:inputType="textPostalAddress"
         android:text='"123 Honeydew Ln"'
@@ -122,12 +119,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="152dp"
-        android:layout_marginLeft="152dp"
-        android:layout_marginTop="210dp"
+        android:layout_marginTop="8dp"
         android:text="State"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintStart_toEndOf="@+id/txt_label_city"
-        app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+        app:layout_constraintTop_toBottomOf="@+id/input_bsn_street" />
 
     <EditText
         android:id="@+id/input_bsn_state"

@@ -14,15 +14,16 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class BusinessSetup extends AppCompatActivity {
 
-    EditText input_name = findViewById(R.id.txt_input_bsn_name);
-    EditText input_num = findViewById(R.id.input_str_num);
-    EditText input_street = findViewById(R.id.input_bsn_street);
-    EditText input_city = findViewById(R.id.input_bsn_city);
-    EditText input_state = findViewById(R.id.input_bsn_state);
-    EditText input_zip = findViewById(R.id.input_bsn_zip);
-    Button btn_submit = findViewById(R.id.btn_submit);
+    EditText input_name;
+    EditText input_num;
+    EditText input_street;
+    EditText input_city;
+    EditText input_state;
+    EditText input_zip;
+    Button btn_submit;
 
     DatabaseReference databaseManagers;
+    DatabaseReference databaseBusiness;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,15 @@ public class BusinessSetup extends AppCompatActivity {
         setContentView(R.layout.activity_business_setup);
 
         databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
+        databaseBusiness = FirebaseDatabase.getInstance().getReference("businesses");
+
+        input_name = findViewById(R.id.input_bsn_name);
+        input_num = findViewById(R.id.input_str_num);
+        input_street = findViewById(R.id.input_bsn_street);
+        input_city = findViewById(R.id.input_bsn_city);
+        input_state = findViewById(R.id.input_bsn_state);
+        input_zip = findViewById(R.id.input_bsn_zip);
+        btn_submit = findViewById(R.id.btn_submit);
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,8 +65,10 @@ public class BusinessSetup extends AppCompatActivity {
         {Toast.makeText(this, "There are required fields empty", Toast.LENGTH_LONG).show();}
         else{
             Manager manager = GlobalClass.manager;
-            Business bsn = new Business(bsn_name, bsn_store_num, bsn_street, bsn_city, bsn_state, bsn_zip);
-            manager.setBusiness(bsn);
+            String id = databaseBusiness.push().getKey();
+            Business bsn = new Business(id, bsn_name, bsn_store_num, bsn_street, bsn_city, bsn_state, bsn_zip);
+            manager.setBusiness(bsn.getName());
+            GlobalClass.business = bsn;
             databaseManagers.child(manager.getId()).setValue(manager);
             Toast.makeText(this, "Data Submitted", Toast.LENGTH_LONG).show();
         }

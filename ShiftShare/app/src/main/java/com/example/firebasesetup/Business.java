@@ -13,8 +13,9 @@ public class Business{
 
     public Business(){}
 
-    public Business(String bsn_name, String bsn_number, String bsn_street, String bsn_city, String bsn_state, String bsn_zip){
+    public Business(String bsn_id, String bsn_name, String bsn_number, String bsn_street, String bsn_city, String bsn_state, String bsn_zip){
 
+        this.id = bsn_id;
         this.name = bsn_name;
         this.number = bsn_number;
         this.street = bsn_street;
@@ -24,6 +25,7 @@ public class Business{
 
     }
 
+    public String getId(){return this.id;}
     public String getName(){return this.name;}
     public String getNumber(){return this.number;}
     public String getStreet(){return this.street;}

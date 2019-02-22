@@ -8,19 +8,22 @@ import android.widget.Button;
 
 public class SignupChoice extends AppCompatActivity {
 
+    Button btn_employee;
+    Button btn_manager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_choice);
 
-        Button btn_employee = findViewById(R.id.btn_employee);
-        Button btn_manager = findViewById(R.id.btn_manager);
+        btn_employee = findViewById(R.id.btn_employee);
+        btn_manager = findViewById(R.id.btn_manager);
 
         btn_employee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent next = new Intent(v.getContext(), EmployeeSetup.class);
-                startActivity(next);
+                //Intent next = new Intent(v.getContext(), EmployeeSetup.class);
+                //startActivity(next);
             }
         });
 

@@ -29,15 +29,14 @@ DatabaseReference databaseManagers;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //Toast.makeText(this, "Database", Toast.LENGTH_LONG).show();
         databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
-
+        //Toast.makeText(this, "Submitting", Toast.LENGTH_LONG).show();
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextContactNumber = (EditText) findViewById(R.id.editTextContactNumber);
         btnAddManager = (Button) findViewById(R.id.btnAddManager);
-
 
         btnAddManager.setOnClickListener( new View.OnClickListener(){
             @Override
