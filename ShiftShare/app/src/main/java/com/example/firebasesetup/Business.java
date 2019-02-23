@@ -25,12 +25,12 @@ public class Business{
 
     }
 
-    public getId(){return this.id;}
-    public getName(){return this.name;}
-    public getNumber(){return this.number;}
-    public getStreet(){return this.street;}
-    public getCity(){return this.city;}
-    public getState(){return this.state;}
-    public getZip(){return this.zip;}
+    public String getId(){return this.id;}
+    public String getName(){return this.name;}
+    public String getNumber(){return this.number;}
+    public String getStreet(){return this.street;}
+    public String getCity(){return this.city;}
+    public String getState(){return this.state;}
+    public String getZip(){return this.zip;}
 
 }

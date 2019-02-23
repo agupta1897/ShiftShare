@@ -7,7 +7,7 @@ public class Manager {
     private String email;
     private String password;
     private String contactNumber;
-
+    private String business;
 
     public Manager(){
 
@@ -42,7 +42,7 @@ public class Manager {
         return contactNumber;
     }
 
-
+    public void setBusiness(String business){this.business = business;}
 
 
 
