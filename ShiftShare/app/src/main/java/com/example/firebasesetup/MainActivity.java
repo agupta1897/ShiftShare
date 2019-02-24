@@ -1,5 +1,6 @@
 package com.example.firebasesetup;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -60,12 +61,15 @@ DatabaseReference databaseManagers;
         {
             String id = databaseManagers.push().getKey();
             Manager manager = new Manager(id,name,email, password, contactNumber);
-            databaseManagers.child(id).setValue(manager);
+            //databaseManagers.child(id).setValue(manager);
+            GlobalClass.manager = manager;
             Toast.makeText(this, "Manager Added", Toast.LENGTH_LONG).show();
+            //Intent next = new Intent(this, BusinessSetup.class);
+            //startActivity(next);
         }
         else
         {
-            Toast.makeText(this,"You should complete all field ", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"You should complete all fields ", Toast.LENGTH_LONG).show();
 
         }
     }
