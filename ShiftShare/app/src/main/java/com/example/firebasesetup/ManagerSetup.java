@@ -14,34 +14,35 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class MainActivity extends AppCompatActivity {
+public class ManagerSetup extends AppCompatActivity {
 
-EditText editTextName;
-EditText editTextEmail;
+    EditText editTextName;
+    EditText editTextEmail;
     EditText editTextPassword;
     EditText editTextContactNumber;
-Button btnAddManager;
+    Button btnAddManager;
 
 
-DatabaseReference databaseManagers;
+    DatabaseReference databaseManagers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toast.makeText(this, "Database", Toast.LENGTH_LONG).show();
-        databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
-        //Toast.makeText(this, "Submitting", Toast.LENGTH_LONG).show();
+
+        //databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
+
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextContactNumber = (EditText) findViewById(R.id.editTextContactNumber);
         btnAddManager = (Button) findViewById(R.id.btnAddManager);
 
+
         btnAddManager.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view){
-            addManager();
+                addManager();
             }
         });
     }
