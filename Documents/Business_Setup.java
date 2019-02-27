@@ -1,22 +1,24 @@
-package com.example.shiftshare;
+package com.example.firebasesetup;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
-import business;
 
-public class Buisiness_Setup extends AppCompatActivity {
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-    TextView input_name = findViewById(R.id.txt_input_bsn_name);
-    TextView input_num = findViewById(R.id.input_str_num);
-    TextView input_street = findViewById(R.id.input_bsn_street);
-    TextView input_city = findViewById(R.id.input_bsn_city);
-    TextView input_state = findViewById(R.id.input_bsn_state);
-    TextView input_zip = findViewById(R.id.input_bsn_zip);
+public class Business_Setup extends AppCompatActivity {
+
+    EditText input_name = findViewById(R.id.txt_input_bsn_name);
+    EditText input_num = findViewById(R.id.input_str_num);
+    EditText input_street = findViewById(R.id.input_bsn_street);
+    EditText input_city = findViewById(R.id.input_bsn_city);
+    EditText input_state = findViewById(R.id.input_bsn_state);
+    EditText input_zip = findViewById(R.id.input_bsn_zip);
     Button btn_submit = findViewById(R.id.btn_submit);
 
     DatabaseReference databaseManagers;
@@ -24,15 +26,14 @@ public class Buisiness_Setup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buisiness__setup);
+        setContentView(R.layout.activity_business_setup);
 
         databaseManagers = FirebaseDatabase.getInstance().getReference("business");
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                
-            }
+            public void onClick(View v) {add_business();}
+
         });
 
     }
@@ -53,9 +54,10 @@ public class Buisiness_Setup extends AppCompatActivity {
         {Toast.makeText(this, "There are required fields empty", Toast.LENGTH_SHORT).show();}
         else{
             String id = databaseManagers.push().getKey();
-            Business bsn = new Business(bsn_id, bsn_name, bsn_store_num, bsn_street, bsn_city, bsn_state, bsn_zip);
+            Business bsn = new Business(id, bsn_name, bsn_store_num, bsn_street, bsn_city, bsn_state, bsn_zip);
             databaseManagers.child(id).setValue(bsn);
-            Toast.makeText(v.getContext(), "Data Submitted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Data Submitted", Toast.LENGTH_SHORT).show();
         }
     }
 }
+
