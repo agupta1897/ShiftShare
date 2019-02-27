@@ -22,8 +22,8 @@ public class SignupChoice extends AppCompatActivity {
         btn_employee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent next = new Intent(v.getContext(), EmployeeSetup.class);
-                //startActivity(next);
+                Intent next = new Intent(v.getContext(), EmployeeSetup.class);
+                startActivity(next);
             }
         });
 

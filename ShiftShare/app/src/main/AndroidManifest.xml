@@ -9,8 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ManagerSetup" android:parentActivityName=".SignupChoice"></activity>
-        <activity android:name=".SignupChoice"></activity>
+        <activity android:name=".Login"></activity>
+        <activity
+            android:name=".WelcomeScreen"
+            android:label="@string/title_activity_welcome_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ManagerSetup"
+            android:parentActivityName=".SignupChoice" />
+        <activity android:name=".SignupChoice" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

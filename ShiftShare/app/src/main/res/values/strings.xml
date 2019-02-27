@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Firebase setup</string>
     <string name="title_activity_signup_choice">SignupChoice</string>
+    <string name="title_activity_welcome_screen">WelcomeScreen</string>
 </resources>
