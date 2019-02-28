@@ -16,10 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-EditText editTextName;
-EditText editTextEmail;
-    EditText editTextPassword;
-    EditText editTextContactNumber;
+
 Button btnAddManager;
 
 
@@ -50,49 +47,7 @@ DatabaseReference databaseManagers;
             }
         });
 
-// Toast.makeText(this, "Database", Toast.LENGTH_LONG).show();
-//
-//
-// databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
-//        //Toast.makeText(this, "Submitting", Toast.LENGTH_LONG).show();
-//        editTextName = (EditText) findViewById(R.id.editTextName);
-//        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-//        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-//        editTextContactNumber = (EditText) findViewById(R.id.editTextContactNumber);
-//        btnAddManager = (Button) findViewById(R.id.btnAddManager);
-//
-//        btnAddManager.setOnClickListener( new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//            addManager();
-//            }
-//        });
      }
 
 
-    private void addManager()
-    {
-        String name = editTextName.getText().toString().trim();
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString();
-        String contactNumber = editTextContactNumber.getText().toString().trim();
-
-
-
-        if(!TextUtils.isEmpty(name) ||  !TextUtils.isEmpty(email) || !TextUtils.isEmpty(password) || !TextUtils.isEmpty(contactNumber) )
-        {
-            String id = databaseManagers.push().getKey();
-            Manager manager = new Manager(id,name,email, password, contactNumber);
-            //databaseManagers.child(id).setValue(manager);
-            GlobalClass.manager = manager;
-            //Toast.makeText(this, "Manager Added", Toast.LENGTH_LONG).show();
-            Intent next = new Intent(this, BusinessSetup.class);
-            startActivity(next);
-        }
-        else
-        {
-            Toast.makeText(this,"You should complete all fields ", Toast.LENGTH_LONG).show();
-
-        }
-    }
 }

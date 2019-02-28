@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class EmployeeSetup extends AppCompatActivity {
@@ -21,14 +22,14 @@ public class EmployeeSetup extends AppCompatActivity {
     Button btnAddEmployee;
 
 
-    DatabaseReference databaseManagers;
+    DatabaseReference databaseEmployees;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_setup);
 
-        //databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
+        databaseEmployees = FirebaseDatabase.getInstance().getReference("Employees");
 
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -40,13 +41,13 @@ public class EmployeeSetup extends AppCompatActivity {
         btnAddEmployee.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //addManager();
+                addEmployee();
             }
         });
     }
 
 
-    private void addManager()
+    private void addEmployee()
     {
         String name = editTextName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
@@ -57,13 +58,12 @@ public class EmployeeSetup extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(name) ||  !TextUtils.isEmpty(email) || !TextUtils.isEmpty(password) || !TextUtils.isEmpty(contactNumber) )
         {
-            String id = databaseManagers.push().getKey();
-            Manager manager = new Manager(id,name,email, password, contactNumber);
-            //databaseManagers.child(id).setValue(manager);
-            GlobalClass.manager = manager;
-            //Toast.makeText(this, "Manager Added", Toast.LENGTH_LONG).show();
-            Intent next = new Intent(this, BusinessSetup.class);
-            startActivity(next);
+            String id = databaseEmployees.push().getKey();
+            Employee employee = new Employee(id,name,contactNumber, password);
+            databaseEmployees.child(id).setValue(employee);
+            GlobalClass.employee = employee;
+           // Intent next = new Intent(this, EmployeePortal.class);
+           // startActivity(next);
         }
         else
         {
