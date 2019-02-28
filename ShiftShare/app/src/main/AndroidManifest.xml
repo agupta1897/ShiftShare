@@ -28,6 +28,9 @@
         <activity
             android:name=".BusinessSetup"
             android:parentActivityName=".ManagerSetup" />
+        <activity
+            android:name=".EmployeeSetup"
+            android:parentActivityName=".SignupChoice" />
     </application>
 
 </manifest>
