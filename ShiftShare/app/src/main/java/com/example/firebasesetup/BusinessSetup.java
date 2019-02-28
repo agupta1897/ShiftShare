@@ -68,10 +68,12 @@ public class BusinessSetup extends AppCompatActivity {
             Manager manager = GlobalClass.manager;
             String id = databaseBusiness.push().getKey();
             Business bsn = new Business(id, bsn_name, bsn_store_num, bsn_street, bsn_city, bsn_state, bsn_zip);
-            manager.setBusiness(bsn.getName());
+            manager.addBusiness(bsn);
+            bsn.addManager(manager);
             GlobalClass.business = bsn;
-            //databaseManagers.child(manager.getId()).setValue(manager);
+            databaseManagers.child(manager.getId()).setValue(manager);
             //I'm not sure the above line is needed; the manager is added on the previous screen. -Carter
+            //If I understand this correctly, it should update the manager in the database with the business object added to its businesses list. -Murray
             databaseBusiness.child(id).setValue(bsn);
             Toast.makeText(this, "Data Submitted", Toast.LENGTH_LONG).show();
 

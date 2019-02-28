@@ -123,7 +123,7 @@ public class ManagerSetup extends AppCompatActivity {
         {
             String id = databaseManagers.push().getKey();
             Manager manager = new Manager(id,name,email, password, contactNumber);
-            databaseManagers.child(id).setValue(manager);
+            //databaseManagers.child(id).setValue(manager);
             GlobalClass.manager = manager;
             //Toast.makeText(this, "Manager Added", Toast.LENGTH_LONG).show();
             Intent next = new Intent(getApplicationContext(), BusinessSetup.class);
