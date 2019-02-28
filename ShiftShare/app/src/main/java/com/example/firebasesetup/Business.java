@@ -1,5 +1,8 @@
 package com.example.firebasesetup;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Business{
 
     private String id;
@@ -24,7 +27,7 @@ public class Business{
         this.state = bsn_state;
         this.zip = bsn_zip;
         this.managers = new LinkedList<>();
-        this.employees = new LinkedLIst<>();
+        this.employees = new LinkedList<>();
 
     }
 
