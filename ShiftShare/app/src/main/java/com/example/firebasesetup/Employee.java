@@ -1,4 +1,4 @@
-package com.example.employeesignuppage;
+package com.example.firebasesetup;
 
 public class Employee {
 

@@ -38,8 +38,7 @@
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="text"
-        android:text='"Dew Drop Inn"'
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
+        android:hint='"Dew Drop Inn"'
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_name" />
 
@@ -61,7 +60,6 @@
         android:layout_marginLeft="16dp"
         android:ems="10"
         android:inputType="number"
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_str_num" />
 
@@ -84,8 +82,7 @@
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="textPostalAddress"
-        android:text='"123 Honeydew Ln"'
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
+        android:hint='"123 Honeydew Ln"'
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_street" />
 
@@ -109,8 +106,7 @@
         android:layout_marginLeft="16dp"
         android:ems="10"
         android:inputType="textPostalAddress"
-        android:text='"Marigold"'
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
+        android:hint='"Marigold"'
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_city" />
 
@@ -133,8 +129,7 @@
         android:layout_marginLeft="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text='"Georgia"'
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
+        android:hint='"Georgia"'
         app:layout_constraintStart_toEndOf="@+id/input_bsn_city"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_state" />
 
@@ -158,8 +153,7 @@
         android:layout_marginLeft="16dp"
         android:ems="10"
         android:inputType="number"
-        android:text='"12345"'
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
+        android:hint='"12345"'
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_zip" />
 

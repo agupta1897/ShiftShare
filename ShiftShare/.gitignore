@@ -13,3 +13,4 @@
 .externalNativeBuild
 .project
 *.prefs
+/.idea/misc.xml
