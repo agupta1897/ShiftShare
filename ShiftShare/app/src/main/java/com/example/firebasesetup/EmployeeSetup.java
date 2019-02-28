@@ -90,6 +90,8 @@ public class EmployeeSetup extends AppCompatActivity {
                 //progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
 
+                    Toast.makeText(getApplicationContext(), "You are successfully registered", Toast.LENGTH_SHORT).show();
+
                     addEmployee();
                     finish();
                     // startActivity(new Intent(SignUpActivity.this, ProfileActivity.class));
@@ -120,8 +122,8 @@ public class EmployeeSetup extends AppCompatActivity {
             Employee employee = new Employee(id,name,contactNumber, password, email);
             databaseEmployees.child(id).setValue(employee);
             GlobalClass.employee = employee;
-           // Intent next = new Intent(getApplicationContext(), EmployeePortal.class);
-           // startActivity(next);
+            Intent next = new Intent(getApplicationContext(), Login.class);
+           startActivity(next);
         }
         else
         {

@@ -92,6 +92,7 @@ public class ManagerSetup extends AppCompatActivity {
                 //progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
 
+                    Toast.makeText(getApplicationContext(), "You are successfully registered", Toast.LENGTH_SHORT).show();
                     addManager();
                     finish();
                    // startActivity(new Intent(SignUpActivity.this, ProfileActivity.class));

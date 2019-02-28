@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login"></activity>
+        <activity
+            android:name=".EPortal"
+            android:label="@string/title_activity_eportal"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Login" />
         <activity
             android:name=".WelcomeScreen"
             android:label="@string/title_activity_welcome_screen"

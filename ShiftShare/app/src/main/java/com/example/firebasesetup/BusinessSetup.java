@@ -1,5 +1,6 @@
 package com.example.firebasesetup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -73,6 +74,9 @@ public class BusinessSetup extends AppCompatActivity {
             //I'm not sure the above line is needed; the manager is added on the previous screen. -Carter
             databaseBusiness.child(id).setValue(bsn);
             Toast.makeText(this, "Data Submitted", Toast.LENGTH_LONG).show();
+
+            Intent next = new Intent(getApplicationContext(), Login.class);
+            startActivity(next);
             // Intent next = new Intent(getApplicationContext(), ManagerPortal.class);
             // startActivity(next);
         }
