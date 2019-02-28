@@ -62,7 +62,7 @@ public class EmployeeSetup extends AppCompatActivity {
             Employee employee = new Employee(id,name,contactNumber, password);
             databaseEmployees.child(id).setValue(employee);
             GlobalClass.employee = employee;
-           // Intent next = new Intent(this, EmployeePortal.class);
+           // Intent next = new Intent(getApplicationContext(), EmployeePortal.class);
            // startActivity(next);
         }
         else

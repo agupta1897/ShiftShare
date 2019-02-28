@@ -30,7 +30,7 @@ public class ManagerSetup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
+        databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
 
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -61,10 +61,10 @@ public class ManagerSetup extends AppCompatActivity {
         {
             String id = databaseManagers.push().getKey();
             Manager manager = new Manager(id,name,email, password, contactNumber);
-            //databaseManagers.child(id).setValue(manager);
+            databaseManagers.child(id).setValue(manager);
             GlobalClass.manager = manager;
             //Toast.makeText(this, "Manager Added", Toast.LENGTH_LONG).show();
-            Intent next = new Intent(this, BusinessSetup.class);
+            Intent next = new Intent(getApplicationContext(), BusinessSetup.class);
             startActivity(next);
         }
         else

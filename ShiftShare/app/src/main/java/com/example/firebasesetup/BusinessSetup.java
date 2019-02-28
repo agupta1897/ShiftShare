@@ -31,7 +31,7 @@ public class BusinessSetup extends AppCompatActivity {
         setContentView(R.layout.activity_business_setup);
 
         databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
-        databaseBusiness = FirebaseDatabase.getInstance().getReference("businesses");
+        databaseBusiness = FirebaseDatabase.getInstance().getReference("Businesses");
 
         input_name = findViewById(R.id.input_bsn_name);
         input_num = findViewById(R.id.input_str_num);
@@ -69,8 +69,12 @@ public class BusinessSetup extends AppCompatActivity {
             Business bsn = new Business(id, bsn_name, bsn_store_num, bsn_street, bsn_city, bsn_state, bsn_zip);
             manager.setBusiness(bsn.getName());
             GlobalClass.business = bsn;
-            databaseManagers.child(manager.getId()).setValue(manager);
+            //databaseManagers.child(manager.getId()).setValue(manager);
+            //I'm not sure the above line is needed; the manager is added on the previous screen. -Carter
+            databaseBusiness.child(id).setValue(bsn);
             Toast.makeText(this, "Data Submitted", Toast.LENGTH_LONG).show();
+            // Intent next = new Intent(getApplicationContext(), ManagerPortal.class);
+            // startActivity(next);
         }
     }
 }
