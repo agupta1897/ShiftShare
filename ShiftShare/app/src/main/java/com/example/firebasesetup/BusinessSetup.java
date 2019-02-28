@@ -50,12 +50,12 @@ public class BusinessSetup extends AppCompatActivity {
     }
 
     private void add_business(){
-        String bsn_name = input_name.getText().toString();
-        String bsn_store_num = input_num.getText().toString();
-        String bsn_street = input_street.getText().toString();
-        String bsn_city = input_city.getText().toString();
-        String bsn_state = input_state.getText().toString();
-        String bsn_zip = input_zip.getText().toString();
+        String bsn_name = input_name.getText().toString().trim();
+        String bsn_store_num = input_num.getText().toString().trim();
+        String bsn_street = input_street.getText().toString().trim();
+        String bsn_city = input_city.getText().toString().trim();
+        String bsn_state = input_state.getText().toString().trim();
+        String bsn_zip = input_zip.getText().toString().trim();
 
         if(     TextUtils.isEmpty(bsn_name) ||
                 TextUtils.isEmpty(bsn_street) ||
@@ -67,10 +67,13 @@ public class BusinessSetup extends AppCompatActivity {
             Manager manager = GlobalClass.manager;
             String id = databaseBusiness.push().getKey();
             Business bsn = new Business(id, bsn_name, bsn_store_num, bsn_street, bsn_city, bsn_state, bsn_zip);
-            manager.setBusiness(bsn.getName());
+            manager.addBusiness(bsn);
+            bsn.addManager(manager);
             GlobalClass.business = bsn;
             databaseManagers.child(manager.getId()).setValue(manager);
+            databaseBusiness.child(id).setValue(bsn);
             Toast.makeText(this, "Data Submitted", Toast.LENGTH_LONG).show();
+            //create intent to goto either login screen or manager portal
         }
     }
 }

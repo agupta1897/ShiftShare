@@ -7,7 +7,7 @@ public class Manager {
     private String email;
     private String password;
     private String contactNumber;
-    private String business;
+    private List<Business> business;
 
     public Manager(){
 
@@ -20,6 +20,7 @@ public class Manager {
         this.contactNumber = contactNumber;
         this.password = password;
         this.email = email;
+        this.business = new LinkedList<>();
     }
 
     public String getId() {
@@ -42,9 +43,29 @@ public class Manager {
         return contactNumber;
     }
 
-    public void setBusiness(String business){this.business = business;}
+    public List getBusiness(){
+        return business;
+    }
 
+    public void setName(String name){
+        this.name = name;
+    }
 
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public void addBusiness(Business business){
+        this.business.add(business);
+    }
+
+    public void removeBusiness(Business business){
+        this.business.remove(business);
+    }
 
 }
 
