@@ -88,9 +88,9 @@ public class Login extends AppCompatActivity {
                     finish();
                     Toast.makeText(getApplicationContext(), "SUCCESSFUL LOGIN!!", Toast.LENGTH_SHORT).show();
 
-                    //Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    Intent intent = new Intent( getApplicationContext(), EPortal.class);
                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    //startActivity(intent);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
