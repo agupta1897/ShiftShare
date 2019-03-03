@@ -2,7 +2,8 @@ package com.example.firebasesetup;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.provider.ContactsContract;
+//import android.provider.ContactsContract;
+//import android.util.Log;
 import android.util.Patterns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,19 +11,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-
-import android.widget.ProgressBar;
+//import java.util.ArrayList;
+//import java.util.List;
+//import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+
+
+
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.security.PrivateKey;
+
 
 public class Login extends AppCompatActivity {
 
 
     FirebaseAuth mAuth;
+    DatabaseReference dbManager;
+    DatabaseReference dbEmployee;
+
+ //   private List<Manager> managerList;
     EditText editTextEmail, editTextPassword;
     //ProgressBar progressBar;
 
@@ -30,14 +48,11 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         Button login = findViewById(R.id.login);
-
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = (EditText) findViewById(R.id.username);
         editTextPassword = (EditText) findViewById(R.id.password);
-
-
+//        managerList = new ArrayList<>();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,8 +66,8 @@ public class Login extends AppCompatActivity {
 
 
     private void userLogin() {
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
 
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
@@ -85,18 +100,63 @@ public class Login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 //progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
-                    finish();
-                    Toast.makeText(getApplicationContext(), "SUCCESSFUL LOGIN!!", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent( getApplicationContext(), EPortal.class);
-                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    isManager(email);
+                    finish();
+
                 } else {
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
+
+
+    public void isManager( String email)
+    {
+        dbManager = FirebaseDatabase.getInstance().getReference("managers");
+        Query query = FirebaseDatabase.getInstance().getReference("managers")
+                .orderByChild("email")
+                .equalTo(email);
+        query.addListenerForSingleValueEvent(valueEventListener);
+
+    }
+
+
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+//            managerList.clear();
+            if (dataSnapshot.exists()) {
+
+                Toast.makeText(getApplicationContext(), "SUCCESSFUL Manager LOGIN!!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent( getApplicationContext(), MPortal.class);
+                startActivity(intent);
+
+                //************ This is a working example of how to capture query results into array list**********/////////////////////
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Manager manager = snapshot.getValue(Manager.class);
+//                    managerList.add(manager);
+//                }
+//           Log.d( "Manager List ", managerList.toString());
+                //*************Example Finished******************/////////
+
+
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "SUCCESSFUL Employee LOGIN!!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent( getApplicationContext(), EPortal.class);
+                startActivity(intent);
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
 
 

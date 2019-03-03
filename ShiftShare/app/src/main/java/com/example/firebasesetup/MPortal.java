@@ -15,11 +15,11 @@ public class MPortal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mportal);
 
-        final TextView m_name = findViewById(R.id.nameEnter);
-        final TextView m_email = findViewById(R.id.emailEnter);
-        final TextView m_password = findViewById(R.id.passwordEnter);
-        final TextView m_phone = findViewById(R.id.phoneEnter);
-        final Button managerEnter = findViewById(R.id.managEnter);
+//        final TextView m_name = findViewById(R.id.nameEnter);
+//        final TextView m_email = findViewById(R.id.emailEnter);
+//        final TextView m_password = findViewById(R.id.passwordEnter);
+//        final TextView m_phone = findViewById(R.id.phoneEnter);
+//        final Button managerEnter = findViewById(R.id.managerEnter);
 
     }
 }

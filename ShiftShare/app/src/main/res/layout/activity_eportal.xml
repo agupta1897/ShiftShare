@@ -11,6 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="EMPLOYEE PORTAL"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <TextView
         android:layout_width="match_parent"
@@ -18,6 +24,9 @@
         android:text="Tap on camera to choose profile picture"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"

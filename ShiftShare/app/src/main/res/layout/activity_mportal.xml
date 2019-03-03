@@ -1,137 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MPortal">
+    android:orientation="vertical"
+    tools:context=".EPortal">
 
-    <TextView
-        android:id="@+id/passwordTitle"
-        android:layout_width="110dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="352dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Password" />
-
-    <TextView
-        android:id="@+id/contactTitle"
-        android:layout_width="110dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="464dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Contact Number" />
-
-    <TextView
-        android:id="@+id/Title"
-        android:layout_width="236dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="44dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Manager Sign Up"
-        tools:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/nameTitle"
-        android:layout_width="110dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="128dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Name" />
-
-    <TextView
-        android:id="@+id/emailTitle"
-        android:layout_width="110dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="240dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Email" />
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="395dp"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="175dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/nameEnter"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="First, Last"
-            android:inputType="textPersonName" />
-    </android.support.design.widget.TextInputLayout>
-
-    <EditText
-        android:id="@+id/emailEnter"
-        android:layout_width="wrap_content"
-        android:layout_height="41dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="289dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/passwordEnter"
-        android:layout_width="wrap_content"
+        android:background="@color/colorPrimary" />
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="396dp"
-        android:ems="10"
-        android:hint="password"
-        android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="MANAGER PORTAL"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
-    <EditText
-        android:id="@+id/phoneEnter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="518dp"
-        android:ems="10"
-        android:hint="XXX-XXX-XXXX"
-        android:inputType="phone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Tap on camera to choose profile picture"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />-->
 
-    <Button
-        android:id="@+id/managEnter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="643dp"
-        android:text="Enter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+
+
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/imageView"-->
+            <!--android:layout_width="170dp"-->
+            <!--android:layout_height="170dp"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_margin="20dp"-->
+            <!--android:background="@drawable/icon_camera"-->
+            <!--android:scaleType="centerCrop" />-->
+
+        <!--<ProgressBar-->
+            <!--android:id="@+id/progressbar"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:visibility="gone" />-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/editTextDisplayName"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Enter Display Name" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textViewVerified"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Verified"-->
+        <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/buttonSave"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="25dp"-->
+        <!--android:background="@drawable/rounded_button_solid"-->
+        <!--android:paddingLeft="55dp"-->
+        <!--android:paddingRight="55dp"-->
+        <!--android:text="Save"-->
+        <!--android:textAllCaps="false" />-->
+
+
+</LinearLayout>
