@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,28 +19,10 @@
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tap on camera to choose profile picture"
-        android:textAlignment="center"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
-
-
-
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="20dp"
-            android:background="@drawable/icon_camera"
-            android:scaleType="centerCrop" />
 
         <ProgressBar
             android:id="@+id/progressbar"
@@ -51,30 +34,16 @@
 
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/editTextDisplayName"
+    <ImageButton
+        android:id="@+id/btn_editProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Display Name" />
+        android:src="@android:drawable/ic_menu_edit" />
 
-    <TextView
-        android:id="@+id/textViewVerified"
+    <CalendarView
+        android:id="@+id/calendarView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Verified"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
-
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/rounded_button_solid"
-        android:paddingLeft="55dp"
-        android:paddingRight="55dp"
-        android:text="Save"
-        android:textAllCaps="false" />
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>
