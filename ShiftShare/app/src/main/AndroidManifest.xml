@@ -13,6 +13,10 @@
             android:name=".EPortal"
             android:label="@string/title_activity_eportal"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ESettings"
+            android:label="@string/title_activity_esettings"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
             <activity
             android:name=".MPortal"
             android:label="MPortal"
