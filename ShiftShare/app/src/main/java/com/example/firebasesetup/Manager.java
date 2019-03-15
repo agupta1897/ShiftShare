@@ -10,7 +10,7 @@ public class Manager {
     private String email;
     private String password;
     private String contactNumber;
-    private List<Business> business;
+    private List<String> business;
 
     public Manager(){
 
@@ -67,12 +67,12 @@ public class Manager {
         return this.business;
     }
 
-    public void addBusiness(Business business){
-        this.business.add(business);
+    public void addBusiness(String id){
+        this.business.add(id);
     }
 
-    public void removeBusiness(Business business){
-        this.business.remove(business);
+    public void removeBusiness(String id){
+        this.business.remove(id);
     }
 
 }

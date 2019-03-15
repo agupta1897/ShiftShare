@@ -12,8 +12,8 @@ public class Business{
     private String city;
     private String state;
     private String zip;
-    private List<Manager> managers;
-    private List<Employee> employees;
+    private List<String> managers;
+    private List<String> employees;
 
     public Business(){}
 
@@ -47,9 +47,9 @@ public class Business{
     public void setCity(String city){this.city = city;}
     public void setState(String state){this.state = state;}
     public void setZip(String zip){this.zip = zip;}
-    public void addManager(Manager manager){this.managers.add(manager);}
-    public void addEmployee(Employee employee){this.employees.add(employee);}
-    public void removeManager(Manager manager){this.managers.remove(manager);}
-    public void removeEmployee(Employee employee){this.employees.remove(employee);}
+    public void addManager(String id){this.managers.add(id);}
+    public void addEmployee(String id){this.employees.add(id);}
+    public void removeManager(String id){this.managers.remove(id);}
+    public void removeEmployee(String id){this.employees.remove(id);}
 
 }
