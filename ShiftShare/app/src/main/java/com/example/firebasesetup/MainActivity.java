@@ -1,53 +1,179 @@
 package com.example.firebasesetup;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+//import android.provider.ContactsContract;
+//import android.util.Log;
+import android.util.Patterns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
+//import java.util.ArrayList;
+//import java.util.List;
+//import android.widget.ProgressBar;
 
-import com.google.firebase.FirebaseApp;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+
+
+
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+
+
+import java.security.PrivateKey;
 
 
 public class MainActivity extends AppCompatActivity {
 
 
-Button btnAddManager;
+    FirebaseAuth mAuth;
+    DatabaseReference dbManager;
+    DatabaseReference dbEmployee;
 
-
-DatabaseReference databaseManagers;
+    //   private List<Manager> managerList;
+    EditText editTextEmail, editTextPassword, editTextSignup;
+    //ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome_screen);
+        setContentView(R.layout.activity_login);
+        Button login = findViewById(R.id.login);
+        mAuth = FirebaseAuth.getInstance();
+        editTextEmail = (EditText) findViewById(R.id.username);
+        editTextPassword = (EditText) findViewById(R.id.password);
+        editTextSignup = (EditText) findViewById(R.id.textSignup);
+        editTextSignup.setClickable(true);
+        editTextSignup.setFocusable(false);
+//        managerList = new ArrayList<>();
 
-        Button register = findViewById(R.id.registerButton);
-        Button signup = findViewById(R.id.signupButton);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userLogin();
+                //   Intent startIntent = new Intent(getApplicationContext(), Login.class);
+                //startActivity(startIntent);
+            }
+        });
 
-
-        register.setOnClickListener(new View.OnClickListener() {
+        editTextSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(getApplicationContext(), SignupChoice.class);
                 startActivity(startIntent);
+
             }
         });
 
-        signup.setOnClickListener(new View.OnClickListener() {
+
+    }
+
+
+    private void userLogin() {
+        final String email = editTextEmail.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            editTextEmail.setError("Email is required");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            editTextEmail.setError("Please enter a valid email");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if (password.isEmpty()) {
+            editTextPassword.setError("Password is required");
+            editTextPassword.requestFocus();
+            return;
+        }
+
+        if (password.length() < 6) {
+            editTextPassword.setError("Minimum lenght of password should be 6");
+            editTextPassword.requestFocus();
+            return;
+        }
+
+        // progressBar.setVisibility(View.VISIBLE);
+
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onClick(View view) {
-                Intent startIntent = new Intent(getApplicationContext(), Login.class);
-                startActivity(startIntent);
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                //progressBar.setVisibility(View.GONE);
+                if (task.isSuccessful()) {
+
+                    isManager(email);
+                    finish();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
 
-     }
+
+
+    public void isManager( String email)
+    {
+        dbManager = FirebaseDatabase.getInstance().getReference("managers");
+        Query query = FirebaseDatabase.getInstance().getReference("managers")
+                .orderByChild("email")
+                .equalTo(email);
+        query.addListenerForSingleValueEvent(valueEventListener);
+
+    }
+
+
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+//            managerList.clear();
+            if (dataSnapshot.exists()) {
+
+                Toast.makeText(getApplicationContext(), "SUCCESSFUL Manager LOGIN!!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent( getApplicationContext(), MPortal.class);
+                startActivity(intent);
+
+                //************ This is a working example of how to capture query results into array list**********/////////////////////
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Manager manager = snapshot.getValue(Manager.class);
+//                    managerList.add(manager);
+//                }
+//           Log.d( "Manager List ", managerList.toString());
+                //*************Example Finished******************/////////
+
+
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "SUCCESSFUL Employee LOGIN!!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent( getApplicationContext(), EPortal.class);
+                startActivity(intent);
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
 
 
 }

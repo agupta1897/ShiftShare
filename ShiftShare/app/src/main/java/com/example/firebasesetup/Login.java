@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+
+
 import java.security.PrivateKey;
 
 
@@ -41,7 +43,7 @@ public class Login extends AppCompatActivity {
     DatabaseReference dbEmployee;
 
  //   private List<Manager> managerList;
-    EditText editTextEmail, editTextPassword;
+    EditText editTextEmail, editTextPassword, editTextSignup;
     //ProgressBar progressBar;
 
     @Override
@@ -52,6 +54,8 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = (EditText) findViewById(R.id.username);
         editTextPassword = (EditText) findViewById(R.id.password);
+        editTextSignup = (EditText) findViewById(R.id.textSignup);
+        editTextSignup.setClickable(true);
 //        managerList = new ArrayList<>();
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +66,17 @@ public class Login extends AppCompatActivity {
                 //startActivity(startIntent);
             }
         });
+
+        editTextSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startIntent = new Intent(getApplicationContext(), SignupChoice.class);
+                startActivity(startIntent);
+
+            }
+        });
+
+
     }
 
 
