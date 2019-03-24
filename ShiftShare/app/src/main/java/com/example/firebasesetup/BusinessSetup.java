@@ -25,6 +25,7 @@ public class BusinessSetup extends AppCompatActivity {
 
     DatabaseReference databaseManagers;
     DatabaseReference databaseBusiness;
+    Manager testManager = new Manager("test", "Atest Entry", "sometest@test.org", "123456", "1234567890");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,8 @@ public class BusinessSetup extends AppCompatActivity {
         {Toast.makeText(this, "There are required fields empty", Toast.LENGTH_LONG).show();}
         else{
             Manager manager = GlobalClass.manager;
-            String id = databaseBusiness.push().getKey();
+            //need to check for existing business here
+            String id = databaseBusiness.push().getKey(); //do this if business doesn't exist
             Business bsn = new Business(id, bsn_name, bsn_store_num, bsn_street, bsn_city, bsn_state, bsn_zip);
             manager.addBusiness(bsn.getId());
             bsn.addManager(manager.getId());
@@ -74,8 +76,15 @@ public class BusinessSetup extends AppCompatActivity {
             databaseManagers.child(manager.getId()).setValue(manager);
             //I'm not sure the above line is needed; the manager is added on the previous screen. -Carter
             //If I understand this correctly, it should update the manager in the database with the business object added to its businesses list. -Murray
+            //Technically, the above line overwrites the previous data, so it's not the most efficient way to do this. -Murray
             databaseBusiness.child(id).setValue(bsn);
             Toast.makeText(this, "Data Submitted", Toast.LENGTH_LONG).show();
+
+            /*** FOR TESTING ***/
+            //add a second manager to the object and update database
+            //bsn.addManager(testManager.getId()); //adds the test manager to the business object
+            //databaseBusiness.child(id).setValue(bsn); //overwrites the old business object at the id with a new one with updated information !!NOT EFFICIENT!!
+            /*** END TESTING ***/
 
             Intent next = new Intent(getApplicationContext(), Login.class);
             startActivity(next);

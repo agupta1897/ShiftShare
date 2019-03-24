@@ -36,9 +36,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:ems="10"
+        android:hint="Dew Drop Inn"
         android:importantForAutofill="no"
         android:inputType="text"
-        android:text='"Dew Drop Inn"'
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_name" />
@@ -83,8 +83,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:ems="10"
+        android:hint="123 Honeydew Ln"
         android:inputType="textPostalAddress"
-        android:text='"123 Honeydew Ln"'
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_street" />
@@ -106,10 +106,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:ems="10"
+        android:hint="Marigold"
         android:inputType="textPostalAddress"
-        android:text='"Marigold"'
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_city" />
@@ -130,10 +129,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:ems="10"
+        android:hint="Georgia"
         android:inputType="textPersonName"
-        android:text='"Georgia"'
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
         app:layout_constraintStart_toEndOf="@+id/input_bsn_city"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_state" />
@@ -155,10 +153,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:ems="10"
+        android:hint="12345"
         android:inputType="number"
-        android:text='"12345"'
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_label_zip" />
