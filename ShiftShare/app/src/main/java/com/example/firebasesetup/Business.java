@@ -12,8 +12,8 @@ public class Business{
     private String city;
     private String state;
     private String zip;
-    private List<String> managers;
-    private List<String> employees;
+    private List<String> managers; //list of manager ids
+    private List<String> employees; //list of employee ids
 
     public Business(){}
 
@@ -31,6 +31,7 @@ public class Business{
 
     }
 
+    //getters
     public String getId(){return this.id;}
     public String getName(){return this.name;}
     public String getNumber(){return this.number;}
@@ -41,12 +42,15 @@ public class Business{
     public List getManagers(){return this.managers;}
     public List getEmployees(){return this.employees;}
 
+    //setters
     public void setName(String name){this.name = name;}
     public void setNumber(String number){this.number = number;}
     public void setStreet(String street){this.street = street;}
     public void setCity(String city){this.city = city;}
     public void setState(String state){this.state = state;}
     public void setZip(String zip){this.zip = zip;}
+
+    //list management
     public void addManager(String id){this.managers.add(id);}
     public void addEmployee(String id){this.employees.add(id);}
     public void removeManager(String id){this.managers.remove(id);}
