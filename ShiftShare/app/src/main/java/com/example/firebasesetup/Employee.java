@@ -8,6 +8,7 @@ public class Employee {
     private String number;
     private String password;
     private String email;
+    private List<String> business; //list of business ids
 
     public Employee() {
 
@@ -20,6 +21,7 @@ public class Employee {
         this.number = empl_number;
         this.password = empl_password;
         this.email = empl_email;
+        this.business = new LinkedList<>();
 
     }
 
@@ -32,5 +34,7 @@ public class Employee {
     public void setEmail(String email){this.email = email;}
     public void setNumber(String number){this.number = number;}
     public void setPassword(String password){this.password = password;}
-    
+    public void addBusiness(String id){this.business.add(id);}
+    public void removeBusiness(String id){this.business.remove(id);}
+
 }
