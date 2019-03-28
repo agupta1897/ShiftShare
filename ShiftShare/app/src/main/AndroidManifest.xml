@@ -15,7 +15,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ESettings"
-            android:label="@string/title_activity_esettings"
+            android:label=".ESettings"
             android:theme="@style/AppTheme.NoActionBar"></activity>
             <activity
             android:name=".MPortal"
