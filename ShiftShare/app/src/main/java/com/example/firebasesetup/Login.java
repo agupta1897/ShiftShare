@@ -146,7 +146,7 @@ public class Login extends AppCompatActivity {
             if (dataSnapshot.exists()) {
 
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Manager LOGIN!!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent( getApplicationContext(), MPortal.class);
+                Intent intent = new Intent( getApplicationContext(), ManagerPortal.class);
                 startActivity(intent);
 
                 //************ This is a working example of how to capture query results into array list**********/////////////////////
