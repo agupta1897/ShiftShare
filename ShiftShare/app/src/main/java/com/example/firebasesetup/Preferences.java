@@ -3,11 +3,10 @@ package com.example.firebasesetup;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 
 public class Preferences {
 
-    public static SharedPreferences getPreferences(Context context){
+    static SharedPreferences getPreferences(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 

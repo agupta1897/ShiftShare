@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference dbManager;
     DatabaseReference dbEmployee;
-
-    android.support.constraint.ConstraintLayout page;
+    //android.support.constraint.ConstraintLayout page;
     //   private List<Manager> managerList;
     EditText editTextEmail, editTextPassword, editTextSignup;
     //ProgressBar progressBar;
@@ -58,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
         editTextEmail = (EditText) findViewById(R.id.username);
         editTextPassword = (EditText) findViewById(R.id.password);
         editTextSignup = (EditText) findViewById(R.id.textSignup);
-        page = findViewById(R.id.page);
+        //page = findViewById(R.id.page);
         editTextSignup.setClickable(true);
         editTextSignup.setFocusable(false);
 //        managerList = new ArrayList<>();
-
+/*
         //check login status in shared preferences
         if(Preferences.getLogin(getApplicationContext())){
-            if(Preferences.getDB(getApplicationContext()).equals("managers")){
+            if("managers".equals(Preferences.getDB(getApplicationContext()))){
                 Intent intent = new Intent(getApplicationContext(), ManagerPortal.class);
                 startActivity(intent);
             }
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         else{
             page.setVisibility(View.VISIBLE);
         }
-
+*/
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Employee LOGIN!!", Toast.LENGTH_SHORT).show();
                 Preferences.setId(getApplicationContext(), dataSnapshot.getKey());
-                Preferences.setDB(getApplicationContext(), "employees");
+                Preferences.setDB(getApplicationContext(), "Employees");
                 Preferences.setLogin(getApplicationContext(), true);
                 Intent intent = new Intent( getApplicationContext(), EPortal.class);
                 startActivity(intent);
