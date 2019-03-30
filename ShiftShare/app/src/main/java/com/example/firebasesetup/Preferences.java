@@ -31,4 +31,14 @@ public class Preferences {
         return getPreferences(context).getString("USER_ID", null);
     }
 
+    public static void setDB(Context context, String db){
+        SharedPreferences.Editor editor = getPreferences(context).edit();
+        editor.putString("USER_DB", db);
+        editor.apply();
+    }
+
+    public static String getDB(Context context){
+        return getPreferences(context).getString("USER_DB", null);
+    }
+
 }

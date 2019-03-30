@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 //import android.provider.ContactsContract;
 //import android.util.Log;
+import android.text.Layout;
 import android.util.Patterns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.security.PrivateKey;
+import java.util.prefs.PreferenceChangeEvent;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference dbManager;
     DatabaseReference dbEmployee;
 
+    android.support.constraint.ConstraintLayout page;
     //   private List<Manager> managerList;
     EditText editTextEmail, editTextPassword, editTextSignup;
     //ProgressBar progressBar;
@@ -55,9 +58,25 @@ public class MainActivity extends AppCompatActivity {
         editTextEmail = (EditText) findViewById(R.id.username);
         editTextPassword = (EditText) findViewById(R.id.password);
         editTextSignup = (EditText) findViewById(R.id.textSignup);
+        page = findViewById(R.id.page);
         editTextSignup.setClickable(true);
         editTextSignup.setFocusable(false);
 //        managerList = new ArrayList<>();
+
+        //check login status in shared preferences
+        if(Preferences.getLogin(getApplicationContext())){
+            if(Preferences.getDB(getApplicationContext()).equals("managers")){
+                Intent intent = new Intent(getApplicationContext(), ManagerPortal.class);
+                startActivity(intent);
+            }
+            else{
+                Intent intent = new Intent(getApplicationContext(), EPortal.class);
+                startActivity(intent);
+            }
+        }
+        else{
+            page.setVisibility(View.VISIBLE);
+        }
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (password.length() < 6) {
-            editTextPassword.setError("Minimum lenght of password should be 6");
+            editTextPassword.setError("Minimum length of password should be 6");
             editTextPassword.requestFocus();
             return;
         }
@@ -147,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
             if (dataSnapshot.exists()) {
 
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Manager LOGIN!!", Toast.LENGTH_SHORT).show();
+                Preferences.setId(getApplicationContext(), dataSnapshot.getKey());
+                Preferences.setDB(getApplicationContext(), "managers");
+                Preferences.setLogin(getApplicationContext(), true);
                 Intent intent = new Intent( getApplicationContext(), ManagerPortal.class);
                 startActivity(intent);
 
@@ -163,6 +185,9 @@ public class MainActivity extends AppCompatActivity {
             else
             {
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Employee LOGIN!!", Toast.LENGTH_SHORT).show();
+                Preferences.setId(getApplicationContext(), dataSnapshot.getKey());
+                Preferences.setDB(getApplicationContext(), "employees");
+                Preferences.setLogin(getApplicationContext(), true);
                 Intent intent = new Intent( getApplicationContext(), EPortal.class);
                 startActivity(intent);
             }
