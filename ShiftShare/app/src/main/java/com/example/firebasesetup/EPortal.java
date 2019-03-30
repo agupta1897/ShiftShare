@@ -176,7 +176,21 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
             @Override
             public void onClick(View view) {
                 String day = spinner.getSelectedItem().toString();
-                databaseSchedules.child(scheduleId).child(day).setValue(null);
+                String availability = day+": ";
+                String start = spinner2.getSelectedItem().toString();
+                String end = spinner3.getSelectedItem().toString();
+                int startTime = timeToInt(start);
+                int endTime = timeToInt(end);
+                while (startTime < endTime){
+                    databaseSchedules.child(scheduleId).child(day).child(Integer.toString(startTime)).setValue("True");
+                    availability = availability.concat(startTime + ", ");
+                    startTime += 30;
+                    if (startTime%100 == 60){startTime += 40;}
+
+                }
+                Toast.makeText(spinner.getContext(), availability, Toast.LENGTH_LONG).show();
+                //  String day = spinner.getSelectedItem().toString();
+              //  databaseSchedules.child(scheduleId).child(day).setValue(null);
             }
         }
         );
