@@ -13,6 +13,8 @@ package com.example.firebasesetup;
         import android.widget.ImageButton;
         import android.widget.Spinner;
         import android.widget.Toast;
+        import android.widget.TextView;
+
 
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
