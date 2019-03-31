@@ -50,11 +50,12 @@ public class EmployeeAdapter extends  RecyclerView.Adapter<EmployeeAdapter.Emplo
         holder.textViewEmail.setText(employee.getEmail());
         holder.textViewName.setText(employee.getName());
         Random r = new Random();
-        double x = 3 + r.nextDouble() * (5 -2);
-        holder.textViewRating.setText(String.valueOf(x));
+        double x = 2 + r.nextDouble() * (5 -2);
+        holder.textViewRating.setText( String.format("%.2f", x));
         holder.textViewNumber.setText(String.valueOf(employee.getNumber()));
 
-        //holder.imageView.setImageDrawable(mCtx.getResources().getDrawable(employee.getImage()));
+
+        holder.imageView.setImageDrawable(mCtx.getResources().getDrawable(R.drawable.employee_icon));
 
     }
 
@@ -67,7 +68,7 @@ public class EmployeeAdapter extends  RecyclerView.Adapter<EmployeeAdapter.Emplo
     //ViewHolderClass - UI Elements
     class EmployeeViewHolder extends RecyclerView.ViewHolder {
         TextView textViewEmail, textViewName, textViewRating, textViewNumber;
-//        ImageView imageView;
+       ImageView imageView;
 
         public EmployeeViewHolder(View itemView) {
             super(itemView);
@@ -76,7 +77,7 @@ public class EmployeeAdapter extends  RecyclerView.Adapter<EmployeeAdapter.Emplo
             textViewName = itemView.findViewById(R.id.textViewName);
             textViewRating = itemView.findViewById(R.id.textViewRating);
             textViewNumber = itemView.findViewById(R.id.textViewNumber);
-//           imageView = itemView.findViewById(R.id.imageView);
+           imageView = itemView.findViewById(R.id.imageView);
         }
     }
 }
