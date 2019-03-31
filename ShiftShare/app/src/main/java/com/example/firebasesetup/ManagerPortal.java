@@ -1,5 +1,6 @@
 package com.example.firebasesetup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +33,8 @@ public class ManagerPortal extends AppCompatActivity
    RecyclerView recyclerView;
     EmployeeAdapter adapter;
     List<Employee> employeeList;
+
+    DatabaseReference dbEmployee ;
 
 
     @Override
@@ -49,20 +59,50 @@ public class ManagerPortal extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        employeeList.add(
-                new Employee(
-                        "abc", "EmployeeName", "2054352352", "132456", "email@mail.com"
-                ));
 
-        employeeList.add(
-                new Employee(
-                        "abc2", "EmployeeName2", "20543523522", "1324562", "email2@mail.com"
-                ));
+            adapter = new EmployeeAdapter(this, employeeList);
+            recyclerView.setAdapter( adapter);
 
-adapter = new EmployeeAdapter(this, employeeList);
-recyclerView.setAdapter( adapter);
+            dbEmployee = FirebaseDatabase.getInstance().getReference("Employees");
+
+            dbEmployee.addListenerForSingleValueEvent(valueEventListener);
 
     }
+
+
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            employeeList.clear();
+            if (dataSnapshot.exists()) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Employee employee = snapshot.getValue(Employee.class);
+                    employeeList.add(employee);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+
+                //************ This is a working example of how to capture query results into array list**********/////////////////////
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Manager manager = snapshot.getValue(Manager.class);
+//                    managerList.add(manager);
+//                }
+//           Log.d( "Manager List ", managerList.toString());
+                //*************Example Finished******************/////////
+
+
+            }
+
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
+
 
     @Override
     public void onBackPressed() {
