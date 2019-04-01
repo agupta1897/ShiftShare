@@ -36,7 +36,6 @@ public class EmployeeAdapter extends  RecyclerView.Adapter<EmployeeAdapter.Emplo
 
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.search_results_list_layout, null);
-
         return new EmployeeViewHolder(view);
 
     }
@@ -53,8 +52,6 @@ public class EmployeeAdapter extends  RecyclerView.Adapter<EmployeeAdapter.Emplo
         double x = 2 + r.nextDouble() * (5 -2);
         holder.textViewRating.setText( String.format("%.2f", x));
         holder.textViewNumber.setText(String.valueOf(employee.getNumber()));
-
-
         holder.imageView.setImageDrawable(mCtx.getResources().getDrawable(R.drawable.employee_icon));
 
     }

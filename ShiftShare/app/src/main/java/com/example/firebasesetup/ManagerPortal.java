@@ -190,7 +190,7 @@ public class ManagerPortal extends AppCompatActivity
                 String end = spinnerTo.getSelectedItem().toString();
                 int startTime = timeToInt(start);
                 int endTime = timeToInt(end);
-                while (startTime < endTime) {
+                if (startTime < endTime) {
 
                 }
                 Toast.makeText(spinnerDay.getContext(), "Search Conducted " + availability, Toast.LENGTH_LONG).show();
