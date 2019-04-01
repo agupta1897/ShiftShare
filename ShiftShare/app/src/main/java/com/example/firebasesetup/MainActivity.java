@@ -74,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
-        else{
-            page.setVisibility(View.VISIBLE);
-        }
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
