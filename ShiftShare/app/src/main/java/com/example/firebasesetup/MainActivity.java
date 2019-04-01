@@ -39,11 +39,11 @@ import java.util.prefs.PreferenceChangeEvent;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    AppPreferences prefs;
     FirebaseAuth mAuth;
     DatabaseReference dbManager;
     DatabaseReference dbEmployee;
-    //android.support.constraint.ConstraintLayout page;
+    android.support.constraint.ConstraintLayout page;
     //   private List<Manager> managerList;
     EditText editTextEmail, editTextPassword, editTextSignup;
     //ProgressBar progressBar;
@@ -52,23 +52,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        prefs = new AppPreferences(getApplicationContext());
         Button login = findViewById(R.id.login);
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = (EditText) findViewById(R.id.username);
         editTextPassword = (EditText) findViewById(R.id.password);
         editTextSignup = (EditText) findViewById(R.id.textSignup);
-        //page = findViewById(R.id.page);
+        page = findViewById(R.id.page);
         editTextSignup.setClickable(true);
         editTextSignup.setFocusable(false);
 //        managerList = new ArrayList<>();
-/*
-        //check login status in shared preferences
-        if(Preferences.getLogin(getApplicationContext())){
-            if("managers".equals(Preferences.getDB(getApplicationContext()))){
+
+        if(prefs.getLoginPref()){
+            if("managers".equals(prefs.getDb())){
                 Intent intent = new Intent(getApplicationContext(), ManagerPortal.class);
                 startActivity(intent);
             }
-            else{
+            else {
                 Intent intent = new Intent(getApplicationContext(), EPortal.class);
                 startActivity(intent);
             }
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         else{
             page.setVisibility(View.VISIBLE);
         }
-*/
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,9 +166,9 @@ public class MainActivity extends AppCompatActivity {
             if (dataSnapshot.exists()) {
 
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Manager LOGIN!!", Toast.LENGTH_SHORT).show();
-                Preferences.setId(getApplicationContext(), dataSnapshot.getKey());
-                Preferences.setDB(getApplicationContext(), "managers");
-                Preferences.setLogin(getApplicationContext(), true);
+                prefs.setId(dataSnapshot.getKey());
+                prefs.setDb("managers");
+                prefs.setLoginPref(true);
                 Intent intent = new Intent( getApplicationContext(), ManagerPortal.class);
                 startActivity(intent);
 
@@ -184,9 +185,9 @@ public class MainActivity extends AppCompatActivity {
             else
             {
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Employee LOGIN!!", Toast.LENGTH_SHORT).show();
-                Preferences.setId(getApplicationContext(), dataSnapshot.getKey());
-                Preferences.setDB(getApplicationContext(), "Employees");
-                Preferences.setLogin(getApplicationContext(), true);
+                prefs.setId(dataSnapshot.getKey());
+                prefs.setDb("Employees");
+                prefs.setLoginPref(true);
                 Intent intent = new Intent( getApplicationContext(), EPortal.class);
                 startActivity(intent);
             }
