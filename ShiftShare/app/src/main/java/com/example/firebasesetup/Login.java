@@ -1,6 +1,8 @@
 package com.example.firebasesetup;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 //import android.provider.ContactsContract;
 //import android.util.Log;
@@ -37,7 +39,7 @@ import java.security.PrivateKey;
 
 public class Login extends AppCompatActivity {
 
-
+    AppPreferences preferences;
     FirebaseAuth mAuth;
     DatabaseReference dbManager;
     DatabaseReference dbEmployee;
@@ -50,6 +52,8 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        preferences = new AppPreferences(getApplicationContext());
         Button login = findViewById(R.id.login);
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = (EditText) findViewById(R.id.username);
@@ -57,6 +61,18 @@ public class Login extends AppCompatActivity {
         editTextSignup = (EditText) findViewById(R.id.textSignup);
         editTextSignup.setClickable(true);
 //        managerList = new ArrayList<>();
+
+        if(preferences.getLoginPref()){
+            if("managers".equals(preferences.getDb())){
+                Intent intent = new Intent(getApplicationContext(), ManagerPortal.class);
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(getApplicationContext(), EPortal.class);
+                startActivity(intent);
+            }
+        }
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +162,9 @@ public class Login extends AppCompatActivity {
             if (dataSnapshot.exists()) {
 
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Manager LOGIN!!", Toast.LENGTH_SHORT).show();
+                preferences.setId(dataSnapshot.getKey());
+                preferences.setDb("managers");
+                preferences.setLoginPref(true);
                 Intent intent = new Intent( getApplicationContext(), ManagerPortal.class);
                 startActivity(intent);
 
@@ -162,6 +181,9 @@ public class Login extends AppCompatActivity {
             else
             {
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Employee LOGIN!!", Toast.LENGTH_SHORT).show();
+                preferences.setId(dataSnapshot.getKey());
+                preferences.setDb("Employees");
+                preferences.setLoginPref(true);
                 Intent intent = new Intent( getApplicationContext(), EPortal.class);
                 startActivity(intent);
             }
