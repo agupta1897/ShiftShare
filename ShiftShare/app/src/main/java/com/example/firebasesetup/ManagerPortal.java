@@ -1,5 +1,6 @@
 package com.example.firebasesetup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -261,14 +262,18 @@ public class ManagerPortal extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_manage) {
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.Profile) {
+            Intent startIntent = new Intent(getApplicationContext(), ManagerProfile.class);
+            startActivity(startIntent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.ViewEmployees) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.Logout) {
 
-        } else if (id == R.id.nav_send) {
+            Intent startIntent = new Intent(getApplicationContext(), Login.class);
+            startActivity(startIntent);
+
+        } else if (id == R.id.About) {
 
         }
 

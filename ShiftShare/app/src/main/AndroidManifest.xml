@@ -10,15 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ManagerProfile"
+            android:label="@string/title_activity_manager_profile"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".ManagerPortal"
             android:label="@string/title_activity_manager_portal"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EPortal"
             android:label="@string/title_activity_eportal"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ESettings"                        
+            android:name=".ESettings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MPortal"

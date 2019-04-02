@@ -7,29 +7,25 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/Profile"
             android:icon="@drawable/ic_menu_manage"
             android:title="Edit Profile" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/ViewEmployees"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="View Employees" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Other">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/Logout"
+                android:icon="@drawable/employee_icon"
+                android:title="Logout" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/About"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="About" />
         </menu>
     </item>
 
