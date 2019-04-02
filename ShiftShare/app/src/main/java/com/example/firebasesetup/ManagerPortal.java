@@ -276,8 +276,11 @@ public class ManagerPortal extends AppCompatActivity
 
         } else if (id == R.id.Logout) {
 
-            Intent startIntent = new Intent(getApplicationContext(), Login.class);
-            startActivity(startIntent);
+            AppPreferences prefs = new AppPreferences(getApplicationContext());
+            prefs.setLoginPref(false);
+            prefs.setId(null);
+            prefs.setDb(null);
+            finish();
 
         } else if (id == R.id.About) {
 
