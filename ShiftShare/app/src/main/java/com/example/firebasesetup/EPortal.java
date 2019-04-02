@@ -1,24 +1,24 @@
 package com.example.firebasesetup;
 
         import android.content.Intent;
-        import android.net.Uri;
         import android.os.Bundle;
+        import android.support.annotation.NonNull;
+        import android.support.annotation.Nullable;
         import android.support.v7.app.AppCompatActivity;
         import android.support.v7.widget.Toolbar;
         import android.view.View;
         import android.widget.AdapterView;
         import android.widget.ArrayAdapter;
         import android.widget.Button;
-        import android.widget.EditText;
         import android.widget.ImageButton;
-        import android.widget.ImageView;
-        import android.widget.ProgressBar;
         import android.widget.Spinner;
-        import android.widget.TextView;
         import android.widget.Toast;
+        import android.widget.TextView;
+
 
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
+        import com.google.firebase.database.ChildEventListener;
         import com.google.firebase.database.DataSnapshot;
         import com.google.firebase.database.DatabaseError;
         import com.google.firebase.database.DatabaseReference;
@@ -26,7 +26,6 @@ package com.example.firebasesetup;
         import com.google.firebase.database.Query;
         import com.google.firebase.database.ValueEventListener;
 
-        import java.sql.Time;
         import java.util.ArrayList;
         import java.util.List;
 
@@ -66,7 +65,28 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
                     scheduleId = databaseSchedules.push().getKey();
                     schedule = new Schedule(scheduleId, user.getEmail());
                     databaseSchedules.child(scheduleId).setValue(schedule);
+                    for (int x = 0; x < 2359; x+=0){
+                        databaseSchedules.child(scheduleId).child("Monday").child(Integer.toString(x)).setValue("False");
+                        databaseSchedules.child(scheduleId).child("Tuesday").child(Integer.toString(x)).setValue("False");
+                        databaseSchedules.child(scheduleId).child("Wednesday").child(Integer.toString(x)).setValue("False");
+                        databaseSchedules.child(scheduleId).child("Thursday").child(Integer.toString(x)).setValue("False");
+                        databaseSchedules.child(scheduleId).child("Friday").child(Integer.toString(x)).setValue("False");
+                        databaseSchedules.child(scheduleId).child("Saturday").child(Integer.toString(x)).setValue("False");
+                        databaseSchedules.child(scheduleId).child("Sunday").child(Integer.toString(x)).setValue("False");
+
+                        //availability[0] = availability[0].concat(startTime + ", ");
+                        x += 30;
+                        if (x%100 == 60){x += 40;}
+
+                    }
                 }
+                updateDisplayedAvailability("Monday");
+                updateDisplayedAvailability("Tuesday");
+                updateDisplayedAvailability("Wednesday");
+                updateDisplayedAvailability("Thursday");
+                updateDisplayedAvailability("Friday");
+                updateDisplayedAvailability("Saturday");
+                updateDisplayedAvailability("Sunday");
 
             }
             @Override
@@ -131,6 +151,7 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
         Hours.add("21:00"); Hours.add("21:30");
         Hours.add("22:00"); Hours.add("22:30");
         Hours.add("23:00"); Hours.add("23:30");
+        Hours.add("23:59");
 
 
 
@@ -148,23 +169,25 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
         spinner3.setAdapter(dataAdapterHours);
 
 
+
         findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String day = spinner.getSelectedItem().toString();
-                String availability = day+": ";
+                final String[] availability = {day + ": "};
                 String start = spinner2.getSelectedItem().toString();
                 String end = spinner3.getSelectedItem().toString();
                 int startTime = timeToInt(start);
                 int endTime = timeToInt(end);
                 while (startTime < endTime){
-                    databaseSchedules.child(scheduleId).child(day).child(Integer.toString(startTime)).setValue("False");
-                    availability = availability.concat(startTime + ", ");
+                    databaseSchedules.child(scheduleId).child(day).child(Integer.toString(startTime)).setValue("True");
+                    //availability[0] = availability[0].concat(startTime + ", ");
                     startTime += 30;
                     if (startTime%100 == 60){startTime += 40;}
 
                 }
-                Toast.makeText(spinner.getContext(), availability, Toast.LENGTH_LONG).show();
+                updateDisplayedAvailability(day);
+                Toast.makeText(spinner.getContext(), availability[0], Toast.LENGTH_LONG).show();
               //  if (day.equals("Monday"))
               //      schedule.setMonday(availability);
               //  databaseSchedules.child(scheduleId).child("Monday").setValue(availability);
@@ -182,13 +205,14 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
                 int startTime = timeToInt(start);
                 int endTime = timeToInt(end);
                 while (startTime < endTime){
-                    databaseSchedules.child(scheduleId).child(day).child(Integer.toString(startTime)).setValue("True");
+                    databaseSchedules.child(scheduleId).child(day).child(Integer.toString(startTime)).setValue("False");
                     availability = availability.concat(startTime + ", ");
                     startTime += 30;
                     if (startTime%100 == 60){startTime += 40;}
 
                 }
-                Toast.makeText(spinner.getContext(), availability, Toast.LENGTH_LONG).show();
+                updateDisplayedAvailability(day);
+                // Toast.makeText(spinner.getContext(), availability, Toast.LENGTH_LONG).show();
                 //  String day = spinner.getSelectedItem().toString();
               //  databaseSchedules.child(scheduleId).child(day).setValue(null);
             }
@@ -196,6 +220,78 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
         );
     }
 
+    void updateDisplayedAvailability(final String day) {
+        TextView t0;
+        if (day.equals("Monday")) {
+            t0 = (TextView) findViewById(R.id.mondayAvailability);
+        }
+        else if (day.equals("Tuesday")){
+            t0 = (TextView) findViewById(R.id.tuesdayAvailability);
+        }
+        else if (day.equals("Wednesday")){
+            t0 = (TextView) findViewById(R.id.wednesdayAvailability);
+        }
+        else if (day.equals("Thursday")){
+            t0 = (TextView) findViewById(R.id.thursdayAvailability);
+        }
+        else if (day.equals("Friday")){
+            t0 = (TextView) findViewById(R.id.fridayAvailability);
+        }
+        else if (day.equals("Saturday")){
+            t0 = (TextView) findViewById(R.id.saturdayAvailability);
+        }
+        else {
+            t0 = (TextView) findViewById(R.id.sundayAvailability);
+        }
+
+        final TextView t = t0;
+        t.setText("");
+        databaseSchedules.child(scheduleId).child(day).orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+            String availability = "";
+            DataSnapshot previousSnap = null;
+            String prevChildKey;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                if (dataSnapshot1.exists()) {
+                    for (DataSnapshot dataSnapshot : dataSnapshot1.getChildren()) {
+                        System.out.println("hour:" + dataSnapshot.getKey() + " value: " + dataSnapshot.getValue());
+                        if (previousSnap == null) {
+                            prevChildKey = null;
+                            previousSnap = dataSnapshot;
+                        }
+                        else
+                            prevChildKey = previousSnap.getKey();
+                        System.out.println("phour:" + previousSnap.getKey() + " pvalue: " + previousSnap.getValue());
+                        if (dataSnapshot.getValue().equals("True")) {
+                            if (prevChildKey == null || previousSnap.getValue().equals("False"))
+                                availability = availability.concat(stringToTime(dataSnapshot.getKey()) + "-");
+                            if (dataSnapshot.getKey().equals("2330"))
+                                availability = availability.concat("23:59;");
+
+                        }
+                        if (dataSnapshot.getValue().equals("False")) {
+                            if (prevChildKey != null && previousSnap.getValue().equals("True"))
+                                availability = availability.concat(stringToTime(dataSnapshot.getKey()) + "; ");
+                        }
+                        //availability = availability.concat(dataSnapshot.getKey() + "- ");
+                        System.out.println(availability);
+                        // TextView t = (TextView) findViewById(R.id.mondayAvailability);
+                        t.setText(availability);
+                        previousSnap = dataSnapshot;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+      //  TextView t = (TextView) findViewById(R.id.mondayAvailability);
+        //t.setText(availability[0]);
+    }
 
     @Override
     protected void onStart() {
@@ -231,9 +327,19 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
         return Time;
     }
 
-    public String intsToTime(Integer h, Integer m){
-        String s = Integer.toString(h) + ":" + Integer.toString(m);
+    public String intsToTime(Integer i){
+        Integer h = i/100;
+        Integer m = i%100;
+        String s;
+        if (m < 10)
+            s = Integer.toString(h) + ":0" + Integer.toString(m);
+        else
+            s = Integer.toString(h) + ":" + Integer.toString(m);
         return s;
+    }
+
+    public String stringToTime(String s){
+        return intsToTime(Integer.valueOf(s));
     }
 
 }
