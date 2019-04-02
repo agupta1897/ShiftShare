@@ -33,9 +33,7 @@ public class ManagerPortal extends AppCompatActivity
     RecyclerView recyclerView;
     EmployeeAdapter adapter;
     List<Employee> employeeList;
-    DatabaseReference dbEmployee;
-    DatabaseReference databaseSchedules;
-
+    DatabaseReference dbEmployee, databaseSchedules;
     Spinner spinnerDay,spinnerTo, spinnerFrom;
 
     @Override
@@ -49,15 +47,13 @@ public class ManagerPortal extends AppCompatActivity
          spinnerTo = (Spinner) findViewById(R.id.spinnerTo);
          spinnerFrom = (Spinner) findViewById(R.id.spinnerFrom);
 
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         setUpSpinners();
@@ -71,8 +67,24 @@ public class ManagerPortal extends AppCompatActivity
         databaseSchedules = FirebaseDatabase.getInstance().getReference("Schedules");
 
 
-        dbEmployee = FirebaseDatabase.getInstance().getReference("Employees");
-        dbEmployee.addListenerForSingleValueEvent(valueEventListener);
+        findViewById(R.id.btn_submit_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String day = spinnerDay.getSelectedItem().toString();
+                String availability = day + ": ";
+                String start = spinnerFrom.getSelectedItem().toString();
+                String end = spinnerTo.getSelectedItem().toString();
+                int startTime = timeToInt(start);
+                int endTime = timeToInt(end);
+                if (startTime < endTime) {
+                    dbEmployee = FirebaseDatabase.getInstance().getReference("Employees");
+                    dbEmployee.addListenerForSingleValueEvent(valueEventListener);
+                }
+                Toast.makeText(spinnerDay.getContext(), "Search Conducted " + availability, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
 
     }
 
@@ -180,24 +192,6 @@ public class ManagerPortal extends AppCompatActivity
         spinnerDay.setAdapter(dataAdapterDays);
         spinnerTo.setAdapter(dataAdapterHours);
         spinnerFrom.setAdapter(dataAdapterHours);
-
-        findViewById(R.id.btn_submit_search).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String day = spinnerDay.getSelectedItem().toString();
-                String availability = day + ": ";
-                String start = spinnerFrom.getSelectedItem().toString();
-                String end = spinnerTo.getSelectedItem().toString();
-                int startTime = timeToInt(start);
-                int endTime = timeToInt(end);
-                if (startTime < endTime) {
-
-                }
-                Toast.makeText(spinnerDay.getContext(), "Search Conducted " + availability, Toast.LENGTH_LONG).show();
-            }
-        });
-
-
     }
 
 
