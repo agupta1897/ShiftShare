@@ -78,7 +78,7 @@ public class ManagerPortal extends AppCompatActivity
 
                 //This is Amber's number temporarily
                 int num;
-                num = 2054352352;
+                num = 1234567890;
 
 
                 sendIntent.setData(Uri.parse("sms:" + num));

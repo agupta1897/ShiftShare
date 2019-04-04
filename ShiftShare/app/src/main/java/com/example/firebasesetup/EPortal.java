@@ -227,6 +227,10 @@ public class EPortal extends AppCompatActivity implements NavigationView.OnNavig
                 String end = spinner3.getSelectedItem().toString();
                 int startTime = timeToInt(start);
                 int endTime = timeToInt(end);
+                if (startTime >= endTime)
+                {
+                    Toast.makeText(spinner.getContext(), "Incorrect Time Slot", Toast.LENGTH_LONG).show();
+                }
                 while (startTime < endTime){
                     databaseSchedules.child(scheduleId).child(day).child(Integer.toString(startTime)).setValue("False");
                     availability = availability.concat(startTime + ", ");
