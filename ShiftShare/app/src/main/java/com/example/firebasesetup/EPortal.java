@@ -405,7 +405,7 @@ public class EPortal extends AppCompatActivity implements NavigationView.OnNavig
 
         //this should be EmployeeProfile but the page crashes, so temporarily using Manager's
         if (id == R.id.Profile) {
-            Intent startIntent = new Intent(getApplicationContext(), ManagerProfile.class);
+            Intent startIntent = new Intent(getApplicationContext(), EmployeeProfile.class);
             startActivity(startIntent);
 
         } else if (id == R.id.ViewEmployees) {

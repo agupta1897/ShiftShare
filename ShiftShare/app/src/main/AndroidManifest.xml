@@ -15,6 +15,10 @@
             android:label="@string/title_activity_manager_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".EmployeeProfile"
+            android:label="@string/title_activity_employee_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ManagerPortal"
             android:label="@string/title_activity_manager_portal"
             android:theme="@style/AppTheme.NoActionBar" />
