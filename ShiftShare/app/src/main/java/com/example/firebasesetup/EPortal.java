@@ -202,11 +202,15 @@ public class EPortal extends AppCompatActivity implements NavigationView.OnNavig
                 String end = spinner3.getSelectedItem().toString();
                 int startTime = timeToInt(start);
                 int endTime = timeToInt(end);
+                if (!validHours(startTime, endTime))
+                {
+                    Toast.makeText(spinner.getContext(), "Incorrect Time Slot", Toast.LENGTH_LONG).show();
+                }
                 while (startTime < endTime){
                     databaseSchedules.child(scheduleId).child(day).child(Integer.toString(startTime)).setValue("True");
                     //availability[0] = availability[0].concat(startTime + ", ");
                     startTime += 30;
-                    if (startTime%100 == 60){startTime += 40;}
+                    if (newHour(startTime)){startTime += 40;}
 
                 }
                 updateDisplayedAvailability(day);
@@ -436,6 +440,18 @@ public class EPortal extends AppCompatActivity implements NavigationView.OnNavig
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    public boolean validHours(int startTime, int endTime){
+        return (startTime < endTime);
+    }
+
+    public boolean newHour(int time){
+        return (time%100 == 60);
+    }
+
+    public boolean isAvailable(DataSnapshot snap){
+        return snap.getValue().equals("True");
     }
 }
 
