@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/Profile"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Edit Profile" />
+        <item
+            android:id="@+id/ViewEmployees"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="View Employees" />
+    </group>
+
+    <item android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/Logout"
+                android:icon="@drawable/employee_icon"
+                android:title="Logout" />
+            <item
+                android:id="@+id/About"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="About" />
+        </menu>
+    </item>
+
+</menu>

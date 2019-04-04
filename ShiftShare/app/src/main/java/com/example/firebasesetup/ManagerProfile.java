@@ -21,6 +21,7 @@ public class ManagerProfile extends AppCompatActivity {
         setContentView(R.layout.activity_manager_profile);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         Button save = findViewById(R.id.saveChanges);
         Button back = findViewById(R.id.backButton);
         resetPW = (TextView) findViewById(R.id.editPassword);
