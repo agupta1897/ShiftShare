@@ -91,16 +91,22 @@ public class ManagerPortal extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 String day = spinnerDay.getSelectedItem().toString();
-                String availability = day + ": ";
+                String availability = day + " Shifts. ";
                 String start = spinnerFrom.getSelectedItem().toString();
                 String end = spinnerTo.getSelectedItem().toString();
+                availability = availability + "Shifts. From " + start  + " to " + end +".";
                 int startTime = timeToInt(start);
                 int endTime = timeToInt(end);
                 if (startTime < endTime) {
+                    Toast.makeText(spinnerDay.getContext(), "Searching Employees...", Toast.LENGTH_LONG).show();
                     dbEmployee = FirebaseDatabase.getInstance().getReference("Employees");
                     dbEmployee.addListenerForSingleValueEvent(valueEventListener);
                 }
-                Toast.makeText(spinnerDay.getContext(), "Search Conducted " + availability, Toast.LENGTH_LONG).show();
+                else
+                {
+                    Toast.makeText(spinnerDay.getContext(), "Incorrect Time Slot", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -120,9 +126,10 @@ public class ManagerPortal extends AppCompatActivity
                     Employee employee = snapshot.getValue(Employee.class);
                     employeeList.add(employee);
                 }
+
                 adapter.notifyDataSetChanged();
             }
-
+            Toast.makeText(spinnerDay.getContext(), employeeList.size() + " Results Found", Toast.LENGTH_LONG).show();
         }
 
         @Override
