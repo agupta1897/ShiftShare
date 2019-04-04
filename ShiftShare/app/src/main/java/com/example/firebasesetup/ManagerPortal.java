@@ -1,6 +1,7 @@
 package com.example.firebasesetup;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,7 @@ public class ManagerPortal extends AppCompatActivity
     DatabaseReference dbEmployee, databaseSchedules;
     Spinner spinnerDay,spinnerTo, spinnerFrom;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +65,26 @@ public class ManagerPortal extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
         adapter = new EmployeeAdapter(this, employeeList);
         recyclerView.setAdapter(adapter);
         databaseSchedules = FirebaseDatabase.getInstance().getReference("Schedules");
+
+        adapter.setOnItemClickListener(new EmployeeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setData(Uri.parse("sms:"));
+
+                //This is Amber's number temporarily
+                int num;
+                num = 2054352352;
+
+
+                sendIntent.setData(Uri.parse("sms:" + num));
+                startActivity(sendIntent);
+            }
+        });
 
 
         findViewById(R.id.btn_submit_search).setOnClickListener(new View.OnClickListener() {
@@ -88,6 +107,7 @@ public class ManagerPortal extends AppCompatActivity
 
 
     }
+
 
 
     ValueEventListener valueEventListener = new ValueEventListener() {
@@ -275,6 +295,9 @@ public class ManagerPortal extends AppCompatActivity
             prefs.setId(null);
             prefs.setDb(null);
             finish();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+
 
         } else if (id == R.id.About) {
 

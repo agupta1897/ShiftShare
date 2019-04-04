@@ -13,7 +13,7 @@
         <item
             android:id="@+id/ViewEmployees"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="View Employees" />
+            android:title="View Businesses" />
     </group>
 
     <item android:title="Other">

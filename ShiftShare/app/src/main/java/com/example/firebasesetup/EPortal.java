@@ -403,6 +403,7 @@ public class EPortal extends AppCompatActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        //this should be EmployeeProfile but the page crashes, so temporarily using Manager's
         if (id == R.id.Profile) {
             Intent startIntent = new Intent(getApplicationContext(), ManagerProfile.class);
             startActivity(startIntent);
@@ -416,6 +417,8 @@ public class EPortal extends AppCompatActivity implements NavigationView.OnNavig
             prefs.setId(null);
             prefs.setDb(null);
             finish();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.About) {
 
