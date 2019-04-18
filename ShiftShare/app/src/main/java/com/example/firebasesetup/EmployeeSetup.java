@@ -16,8 +16,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class EmployeeSetup extends AppCompatActivity {
@@ -118,16 +121,51 @@ public class EmployeeSetup extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(name) ||  !TextUtils.isEmpty(email) || !TextUtils.isEmpty(password) || !TextUtils.isEmpty(contactNumber) )
         {
-            String id = databaseEmployees.push().getKey();
-            Employee employee = new Employee(id,name,contactNumber, password, email);
-            databaseEmployees.child(id).setValue(employee);
-            GlobalClass.employee = employee;
+            databaseEmployees.addValueEventListener(valueEventListener);
             Intent next = new Intent(getApplicationContext(), Login.class);
-           startActivity(next);
+            startActivity(next);
         }
         else
         {
             Toast.makeText(this,"You should complete all fields ", Toast.LENGTH_LONG).show();
         }
     }
+
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            Boolean valid = false;
+            String email = editTextEmail.getText().toString().trim();
+            if(dataSnapshot.exists()){
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                    Employee dbEmployee = snapshot.getValue(Employee.class);
+                    if(email.equals(dbEmployee.getEmail())){
+                        String password = editTextPassword.getText().toString().trim();
+                        dbEmployee.setPassword(password);
+                        databaseEmployees.child(dbEmployee.getId()).setValue(dbEmployee);
+                        valid = true;
+                        break;
+                    }
+                }
+            }
+            if(!valid){
+
+                Toast.makeText(getApplicationContext(), "Invalid email. Contact manager", Toast.LENGTH_LONG).show();
+
+            }
+            else{
+
+                Toast.makeText(getApplicationContext(), "Registration successful", Toast.LENGTH_LONG).show();
+
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 }

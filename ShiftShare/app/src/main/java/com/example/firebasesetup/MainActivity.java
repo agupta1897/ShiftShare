@@ -39,7 +39,7 @@ import java.util.prefs.PreferenceChangeEvent;
 
 public class MainActivity extends AppCompatActivity {
 
-    AppPreferences prefs;
+    AppPreferences preferences;
     FirebaseAuth mAuth;
     DatabaseReference dbManager;
     DatabaseReference dbEmployee;
@@ -47,13 +47,15 @@ public class MainActivity extends AppCompatActivity {
     //   private List<Manager> managerList;
     EditText editTextEmail, editTextPassword, editTextSignup;
     //ProgressBar progressBar;
+    Manager manager;
+    Employee employee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        prefs = new AppPreferences(getApplicationContext());
+        preferences = new AppPreferences(getApplicationContext());
         Button login = findViewById(R.id.login);
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = (EditText) findViewById(R.id.username);
@@ -64,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
         editTextSignup.setFocusable(false);
 //        managerList = new ArrayList<>();
 
-        if(prefs.getLoginPref()){
-            if("managers".equals(prefs.getDb())){
+        if(preferences.getLoginPref()){
+            if("managers".equals(preferences.getDb())){
                 Intent intent = new Intent(getApplicationContext(), ManagerPortal.class);
                 startActivity(intent);
             }
@@ -163,10 +165,12 @@ public class MainActivity extends AppCompatActivity {
             if (dataSnapshot.exists()) {
 
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Manager LOGIN!!", Toast.LENGTH_SHORT).show();
-                prefs.setId(dataSnapshot.getKey());
-                prefs.setDb("managers");
-                prefs.setLoginPref(true);
-                Intent intent = new Intent( getApplicationContext(), ManagerPortal.class);
+                preferences.setId(dataSnapshot.getKey());
+                preferences.setDb("managers");
+                preferences.setLoginPref(true);
+                manager = dataSnapshot.child(preferences.getId()).getValue(Manager.class);
+                GlobalClass.setManager(manager);
+                Intent intent = new Intent( getApplicationContext(), BusinessSelect.class);
                 startActivity(intent);
 
                 //************ This is a working example of how to capture query results into array list**********/////////////////////
@@ -182,9 +186,12 @@ public class MainActivity extends AppCompatActivity {
             else
             {
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Employee LOGIN!!", Toast.LENGTH_SHORT).show();
-                prefs.setId(dataSnapshot.getKey());
-                prefs.setDb("Employees");
-                prefs.setLoginPref(true);
+                preferences.setId(dataSnapshot.getKey());
+                preferences.setDb("Employees");
+                preferences.setLoginPref(true);
+                dbEmployee = FirebaseDatabase.getInstance().getReference("Employees");
+                Query query = dbEmployee.orderByChild("id").equalTo(preferences.getId());
+                query.addListenerForSingleValueEvent(employeeListener);
                 Intent intent = new Intent( getApplicationContext(), EPortal.class);
                 startActivity(intent);
             }
@@ -196,6 +203,20 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    ValueEventListener employeeListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+            if(dataSnapshot.exists()){
+                employee = dataSnapshot.getValue(Employee.class);
+                GlobalClass.setEmployee(employee);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
 }

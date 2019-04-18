@@ -19,6 +19,9 @@
     <item android:title="Other">
         <menu>
             <item
+                android:id="@+id/AddEmployee"
+                android:title="Add Employee" />
+            <item
                 android:id="@+id/Logout"
                 android:icon="@drawable/employee_icon"
                 android:title="Logout" />

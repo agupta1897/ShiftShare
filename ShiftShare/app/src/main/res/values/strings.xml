@@ -11,4 +11,6 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_manager_profile">ManagerProfile</string>
+    <string name="title_activity_employee_create">EmployeeCreate</string>
+    <string name="title_activity_business_select">BusinessSelect</string>
 </resources>

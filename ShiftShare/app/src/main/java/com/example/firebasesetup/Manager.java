@@ -63,7 +63,7 @@ public class Manager {
         this.password = password;
     }
 
-    public List getBusiness(){
+    public List<String> getBusiness(){
         return this.business;
     }
 

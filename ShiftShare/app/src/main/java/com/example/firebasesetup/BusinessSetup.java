@@ -25,7 +25,7 @@ public class BusinessSetup extends AppCompatActivity {
 
     DatabaseReference databaseManagers;
     DatabaseReference databaseBusiness;
-    Manager testManager = new Manager("test", "Atest Entry", "sometest@test.org", "123456", "1234567890");
+    //Manager testManager = new Manager("test", "Atest Entry", "sometest@test.org", "123456", "1234567890");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,6 @@ public class BusinessSetup extends AppCompatActivity {
         input_state = findViewById(R.id.input_bsn_state);
         input_zip = findViewById(R.id.input_bsn_zip);
         btn_submit = findViewById(R.id.btn_submit);
-
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {add_business();}
@@ -66,13 +65,13 @@ public class BusinessSetup extends AppCompatActivity {
                 TextUtils.isEmpty(bsn_zip))
         {Toast.makeText(this, "There are required fields empty", Toast.LENGTH_LONG).show();}
         else{
-            Manager manager = GlobalClass.manager;
+            Manager manager = GlobalClass.getManager();
             //need to check for existing business here
             String id = databaseBusiness.push().getKey(); //do this if business doesn't exist
             Business bsn = new Business(id, bsn_name, bsn_store_num, bsn_street, bsn_city, bsn_state, bsn_zip);
             manager.addBusiness(bsn.getId());
             bsn.addManager(manager.getId());
-            GlobalClass.business = bsn;
+            GlobalClass.setBusiness(bsn);
             databaseManagers.child(manager.getId()).setValue(manager);
             //I'm not sure the above line is needed; the manager is added on the previous screen. -Carter
             //If I understand this correctly, it should update the manager in the database with the business object added to its businesses list. -Murray
