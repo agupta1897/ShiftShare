@@ -26,22 +26,27 @@ public class BusinessSelect extends AppCompatActivity {
 
     RecyclerView recyclerView;
     BusinessAdapter businessAdapter;
-    RecyclerView.LayoutManager layoutManager;
     List<Business> businessList;
     Manager manager;
     DatabaseReference databaseBusiness;
+    DatabaseReference databaseManager;
+    AppPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_select);
 
-        recyclerView = findViewById(R.id.bsn_view);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
+        preferences = new AppPreferences(getApplicationContext());
         businessList = new ArrayList<>();
+        recyclerView = findViewById(R.id.bsn_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        databaseManager = FirebaseDatabase.getInstance().getReference("managers");
+
+        //recyclerView.setHasFixedSize(true);
+
         businessAdapter = new BusinessAdapter(this, businessList);
         recyclerView.setAdapter(businessAdapter);
 
@@ -51,9 +56,29 @@ public class BusinessSelect extends AppCompatActivity {
         databaseBusiness = FirebaseDatabase.getInstance().getReference("Businesses");
         for(int i = 0; i < manager.getBusiness().size(); i++) {
 
-            String id = manager.getBusiness().get(i).toString();
-            Query query = databaseBusiness.equalTo(id);
-            query.addListenerForSingleValueEvent(valueEventListener);
+            final String id = manager.getBusiness().get(i);
+            final int pos = i;
+            System.out.println("Bsn ID @ " + i + " = " + id);
+            Query query = databaseBusiness.orderByChild("id").equalTo(id);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        Business business = snapshot.getValue(Business.class);
+                        if(business.getId().equals(id)){
+                            System.out.println("BSN Name = " + business.getName());
+                            businessList.add(pos, business);
+                            businessAdapter.notifyItemInserted(pos);
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
         }
 
@@ -62,27 +87,12 @@ public class BusinessSelect extends AppCompatActivity {
             public void onItemClick(View view, int position){
                 Business business = businessList.get(position);
                 GlobalClass.setBusiness(business);
+                System.out.println("Position " + position + ": ID " + business.getId());
                 Intent intent = new Intent(getApplicationContext(), ManagerPortal.class);
                 startActivity(intent);
             }
         });
 
     }
-
-    ValueEventListener valueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-            Business business = dataSnapshot.getValue(Business.class);
-            businessList.add(business);
-            businessAdapter.notifyDataSetChanged();
-
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
-    };
 
 }

@@ -39,6 +39,7 @@ public class EmployeeCreate extends AppCompatActivity {
     EditText editTextContactNumber;
     Button btnAddEmployee;
     Manager manager;
+    Employee employee;
     Business business;
     List<Business> businessList;
 
@@ -49,7 +50,7 @@ public class EmployeeCreate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employee_setup);
+        setContentView(R.layout.activity_employee_create);
 
         databaseEmployees = FirebaseDatabase.getInstance().getReference("Employees");
 
@@ -58,7 +59,6 @@ public class EmployeeCreate extends AppCompatActivity {
         editTextContactNumber = (EditText) findViewById(R.id.editTextContactNumber);
         btnAddEmployee = (Button) findViewById(R.id.btnAddEmployee);
 
-        business = GlobalClass.getBusiness();
         btnAddEmployee.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -95,15 +95,17 @@ public class EmployeeCreate extends AppCompatActivity {
         String contactNumber = editTextContactNumber.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(name) || !TextUtils.isEmpty(email) || !TextUtils.isEmpty(contactNumber) )
+        if(!TextUtils.isEmpty(name) || !TextUtils.isEmpty(email) || !TextUtils.isEmpty(contactNumber))
         {
             String id = databaseEmployees.push().getKey();
-            Employee employee = new Employee(id, name, contactNumber, null, email);
-            business.addEmployee(id);
-            databaseBusiness = FirebaseDatabase.getInstance().getReference("Businesses");
-            databaseBusiness.child(business.getId()).setValue(business);
+            business = GlobalClass.getBusiness();
+            employee = new Employee(id, name, contactNumber, null, email);
+            System.out.println("New emp ID: " + employee.getId() + " : Bsn ID: " + GlobalClass.getBusiness().getId());
+            business.addEmployee(employee.getId());
             GlobalClass.setBusiness(business);
-            databaseEmployees.child(id).setValue(employee);
+            databaseBusiness = FirebaseDatabase.getInstance().getReference("Businesses");
+            databaseBusiness.child(GlobalClass.getBusiness().getId()).setValue(GlobalClass.getBusiness());
+            databaseEmployees.child(employee.getId()).setValue(employee);
             Intent next = new Intent(getApplicationContext(), ManagerPortal.class);
             startActivity(next);
         }
