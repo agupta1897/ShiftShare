@@ -130,7 +130,6 @@ public class ManagerPortal extends AppCompatActivity
                 }
                 getSchedules();
             }
-            Toast.makeText(spinnerDay.getContext(), employeeList.size() + " Results Found", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -191,7 +190,7 @@ public class ManagerPortal extends AppCompatActivity
                         }
                     }
                 }
-
+                Toast.makeText(spinnerDay.getContext(), employeeListFinal.size() + " Results Found", Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
 
             }
