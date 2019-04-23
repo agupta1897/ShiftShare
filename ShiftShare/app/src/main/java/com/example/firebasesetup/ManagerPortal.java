@@ -453,12 +453,26 @@ public class ManagerPortal extends AppCompatActivity
             prefs.setLoginPref(false);
             prefs.setId(null);
             prefs.setDb(null);
+            GlobalClass.clearGlobal();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
+            /*
+            the intent is necessary as finish() simply tells Android that this activity is no longer
+            needed. It doesn't pass info on what to do afterwards. Should either close the app or
+            go to the main activity afterwards. For now, going to MainActivity. Suspect reason why
+            one instance of app would go to main while the other repeated the same screen is
+            the behaviour becomes undefined. finish() is still needed, though, to prevent a logged
+            out user from hitting the back button and going to the screen he logged out from -Murray
+            */
 
 
         } else if (id == R.id.About) {
+
+        } else if (id == R.id.AddEmployee){
+
+            Intent intent = new Intent(getApplicationContext(), EmployeeCreate.class);
+            startActivity(intent);
 
         }
 

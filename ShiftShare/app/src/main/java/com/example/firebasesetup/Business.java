@@ -51,8 +51,14 @@ public class Business{
     public void setZip(String zip){this.zip = zip;}
 
     //list management
-    public void addManager(String id){this.managers.add(id);}
-    public void addEmployee(String id){this.employees.add(id);}
+    public void addManager(String id){
+        if(this.managers == null) this.managers = new LinkedList<>();
+        this.managers.add(id);
+    }
+    public void addEmployee(String id){
+        if(this.employees == null) this.employees = new LinkedList<>();
+        this.employees.add(id);
+    }
     public void removeManager(String id){this.managers.remove(id);}
     public void removeEmployee(String id){this.employees.remove(id);}
 
