@@ -42,7 +42,6 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
 
-
             <TextView
                 android:id="@+id/textViewEmail"
                 android:layout_width="wrap_content"

@@ -1,7 +1,9 @@
 package com.example.firebasesetup;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,12 +18,14 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -33,15 +37,18 @@ public class ManagerPortal extends AppCompatActivity
 
     RecyclerView recyclerView;
     EmployeeAdapter adapter;
-    List<Employee> employeeList;
-    DatabaseReference dbEmployee, databaseSchedules;
+    List<Employee> employeeList, employeeListFinal;
+    List<Schedule> scheduleList;
+    DatabaseReference dbEmployee, dbSchedules;
     Spinner spinnerDay,spinnerTo, spinnerFrom;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_portal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
          spinnerDay = (Spinner) findViewById(R.id.spinnerDay);
@@ -59,36 +66,59 @@ public class ManagerPortal extends AppCompatActivity
 
         setUpSpinners();
         employeeList = new ArrayList<>();
+        employeeListFinal = new ArrayList<>();
+        scheduleList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new EmployeeAdapter(this, employeeList);
+
+        adapter = new EmployeeAdapter(this, employeeListFinal);
         recyclerView.setAdapter(adapter);
-        databaseSchedules = FirebaseDatabase.getInstance().getReference("Schedules");
+        dbSchedules = FirebaseDatabase.getInstance().getReference("Schedules");
+
+        adapter.setOnItemClickListener(new EmployeeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setData(Uri.parse("sms:"));
+
+                //This is Amber's number temporarily
+                int num;
+                num = 1234567890;
+
+
+                sendIntent.setData(Uri.parse("sms:" + num));
+                startActivity(sendIntent);
+            }
+        });
 
 
         findViewById(R.id.btn_submit_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String day = spinnerDay.getSelectedItem().toString();
-                String availability = day + ": ";
+                String availability = day + " Shifts. ";
                 String start = spinnerFrom.getSelectedItem().toString();
                 String end = spinnerTo.getSelectedItem().toString();
+                availability = availability + "Shifts. From " + start  + " to " + end +".";
                 int startTime = timeToInt(start);
                 int endTime = timeToInt(end);
                 if (startTime < endTime) {
+                    Toast.makeText(spinnerDay.getContext(), "Searching Employees...", Toast.LENGTH_LONG).show();
                     dbEmployee = FirebaseDatabase.getInstance().getReference("Employees");
-                    dbEmployee.addListenerForSingleValueEvent(valueEventListener);
+                    dbEmployee.addListenerForSingleValueEvent(valueEventListenerEmployee);
                 }
-                Toast.makeText(spinnerDay.getContext(), "Search Conducted " + availability, Toast.LENGTH_LONG).show();
+                else
+                {
+                    Toast.makeText(spinnerDay.getContext(), "Incorrect Time Slot", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
-
     }
 
-
-    ValueEventListener valueEventListener = new ValueEventListener() {
+    ValueEventListener valueEventListenerEmployee = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             employeeList.clear();
@@ -98,15 +128,148 @@ public class ManagerPortal extends AppCompatActivity
                     Employee employee = snapshot.getValue(Employee.class);
                     employeeList.add(employee);
                 }
-                adapter.notifyDataSetChanged();
+                getSchedules();
             }
-
+            Toast.makeText(spinnerDay.getContext(), employeeList.size() + " Results Found", Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
         }
     };
+
+
+    void getSchedules ()
+    {
+        dbSchedules = FirebaseDatabase.getInstance().getReference("Schedules");
+        Query query = FirebaseDatabase.getInstance().getReference("Schedules").orderByChild("Monday");
+        query.addListenerForSingleValueEvent(valueEventListenerSchedule);
+    }
+
+    ValueEventListener valueEventListenerSchedule = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot2) {
+            scheduleList.clear();
+            final Integer start = timeToInt(spinnerFrom.getSelectedItem().toString());
+            final Integer end = timeToInt(spinnerTo.getSelectedItem().toString());
+
+            if (dataSnapshot2.exists()) {
+
+                List<String> matchedEmployees = new ArrayList<>();
+
+                for (DataSnapshot dataSnapShot1 : dataSnapshot2.getChildren()) {
+                    DataSnapshot dataSnapShot = dataSnapShot1.child("Monday");
+
+                    Boolean includeEmail = true;
+
+                    for (DataSnapshot SnapShot : dataSnapShot.getChildren()) {
+
+                        Integer hour = Integer.valueOf(SnapShot.getKey());
+                        Boolean isAvailable = toBool(SnapShot.getValue().toString().toLowerCase());
+
+                        if (hour >= start && hour < end) {
+                            if (isAvailable != true) {
+                                includeEmail = false;
+                            }
+                        }
+                    }
+                    if (includeEmail) {
+
+                        matchedEmployees.add(dataSnapShot1.child("empl_id").getValue().toString());
+
+                        Toast.makeText(spinnerDay.getContext(), "Show this employee: " + dataSnapShot1.child("empl_id").getValue().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+
+                for (int i = 0; i < employeeList.size(); i++) {
+                    for (int j = 0; j < matchedEmployees.size(); j++) {
+                        if (employeeList.get(i).getEmail() != null) {
+                            if (employeeList.get(i).getEmail().contains(matchedEmployees.get(j))) {
+                                employeeListFinal.add(employeeList.get(i));
+                            }
+                        }
+                    }
+                }
+
+                adapter.notifyDataSetChanged();
+
+            }
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+        }
+    };
+
+
+//    void getScheduleForDays( List<Schedule> scheduleList) {
+//        Integer startTime = timeToInt(spinnerFrom.getSelectedItem().toString());
+//        Integer endTime = timeToInt(spinnerTo.getSelectedItem().toString());
+//        String day = spinnerDay.getSelectedItem().toString();
+//        for (int i = 0; i < scheduleList.size(); i++) {
+//            getScheduleForDay( scheduleList.get(i), day, startTime, endTime);
+//        }
+//    }
+
+    boolean toBool(String  x)
+    {
+        if (x.contains("true"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+//
+//
+//    public interface MyCallBack{
+//        void onCallback( Schedule value );
+//    }
+
+//
+//    boolean getScheduleForDay(final Schedule sch, String day, final Integer start, final Integer end, final MyCallBack myCallBack) {
+//        final TextView noView = findViewById(R.id.noView);
+//        noView.setText("");
+//
+//        dbSchedules.child(sch.getId()).child(day).orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+//
+//            Integer hour;
+//            Boolean isAvailable;
+//
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+//                if (dataSnapshot1.exists()) {
+//                    for (DataSnapshot dataSnapshot : dataSnapshot1.getChildren()) {
+//
+//                        hour = Integer.valueOf(dataSnapshot.getKey());
+//                        isAvailable = toBool(dataSnapshot.getValue().toString().toLowerCase());
+//
+//                        if (hour >= start && hour < end) {
+//                            if (isAvailable != true) {
+//                                myCallBack.onCallback(null);
+//                            }
+//                        }
+//                    }
+//                    myCallBack.onCallback(sch);
+//                }
+//
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        });
+//
+//        if(noView.getText().toString().contains("NO"))
+//        {
+//            return false;
+//        }
+//        else
+//        {
+//            return  true;
+//        }
+//    }
 
 
     public void setUpSpinners() {
@@ -209,6 +372,21 @@ public class ManagerPortal extends AppCompatActivity
         return Time;
     }
 
+    public String intsToTime(Integer i){
+        Integer h = i/100;
+        Integer m = i%100;
+        String s;
+        if (m < 10)
+            s = Integer.toString(h) + ":0" + Integer.toString(m);
+        else
+            s = Integer.toString(h) + ":" + Integer.toString(m);
+        return s;
+    }
+
+    public String stringToTime(String s){
+        return intsToTime(Integer.valueOf(s));
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -226,6 +404,10 @@ public class ManagerPortal extends AppCompatActivity
         getMenuInflater().inflate(R.menu.manager_portal, menu);
         return true;
     }
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -284,6 +466,7 @@ public class ManagerPortal extends AppCompatActivity
             the behaviour becomes undefined. finish() is still needed, though, to prevent a logged
             out user from hitting the back button and going to the screen he logged out from -Murray
             */
+
 
         } else if (id == R.id.About) {
 

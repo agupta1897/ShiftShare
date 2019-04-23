@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".BusinessSelect"
             android:label="@string/title_activity_business_select"
@@ -25,6 +26,10 @@
         <activity
             android:name=".ManagerProfile"
             android:label="@string/title_activity_manager_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EmployeeProfile"
+            android:label="@string/title_activity_employee_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ManagerPortal"

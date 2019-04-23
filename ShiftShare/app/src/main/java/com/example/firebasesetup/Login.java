@@ -35,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.security.PrivateKey;
+import java.util.regex.Pattern;
 
 
 public class Login extends AppCompatActivity {
@@ -97,25 +98,25 @@ public class Login extends AppCompatActivity {
         final String email = editTextEmail.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
-        if (email.isEmpty()) {
+        if (isEmptyEmailAddress(email)) {
             editTextEmail.setError("Email is required");
             editTextEmail.requestFocus();
             return;
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (!isValidEmailAddress(email)) {
             editTextEmail.setError("Please enter a valid email");
             editTextEmail.requestFocus();
             return;
         }
 
-        if (password.isEmpty()) {
+        if (isEmptyPassword(password)) {
             editTextPassword.setError("Password is required");
             editTextPassword.requestFocus();
             return;
         }
 
-        if (password.length() < 6) {
+        if (!isValidPassword(password)) {
             editTextPassword.setError("Minimum lenght of password should be 6");
             editTextPassword.requestFocus();
             return;
@@ -139,6 +140,36 @@ public class Login extends AppCompatActivity {
         });
     }
 
+
+    public boolean isValidEmailAddress(String email){
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
+    public boolean isEmptyEmailAddress(String email)
+    {
+        return email.isEmpty();
+    }
+
+    public boolean isValidPassword(String password){
+
+        if( password.length() <6)
+            return false;
+        else
+            return true;
+    }
+
+    public boolean isEmptyPassword(String password)
+    {
+        return password.isEmpty();
+    }
 
 
     public void isManager( String email)

@@ -5,14 +5,18 @@ package com.example.firebasesetup;
 * RecyclerView.ViewHolder
  */
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.content.Context;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.LayoutInflater;
+
 
 
 
@@ -62,19 +66,51 @@ public class EmployeeAdapter extends  RecyclerView.Adapter<EmployeeAdapter.Emplo
     }
 
 
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     //ViewHolderClass - UI Elements
-    class EmployeeViewHolder extends RecyclerView.ViewHolder {
+    public class EmployeeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textViewEmail, textViewName, textViewRating, textViewNumber;
        ImageView imageView;
+       Button btnConnect;
 
-        public EmployeeViewHolder(View itemView) {
+
+
+        public EmployeeViewHolder(final View itemView) {
             super(itemView);
 
             textViewEmail = itemView.findViewById(R.id.textViewEmail);
             textViewName = itemView.findViewById(R.id.textViewName);
             textViewRating = itemView.findViewById(R.id.textViewRating);
             textViewNumber = itemView.findViewById(R.id.textViewNumber);
-           imageView = itemView.findViewById(R.id.imageView);
+            imageView = itemView.findViewById(R.id.imageView);
+            btnConnect = itemView.findViewById(R.id.btnConnect);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Triggers click upwards to the adapter on click
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(itemView, position);
+                        }
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onClick(View view) {
+
         }
     }
 }

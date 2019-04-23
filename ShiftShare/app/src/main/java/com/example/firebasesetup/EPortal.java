@@ -4,8 +4,14 @@ package com.example.firebasesetup;
         import android.os.Bundle;
         import android.support.annotation.NonNull;
         import android.support.annotation.Nullable;
+        import android.support.design.widget.NavigationView;
+        import android.support.v4.view.GravityCompat;
+        import android.support.v4.widget.DrawerLayout;
+        import android.support.v7.app.ActionBarDrawerToggle;
         import android.support.v7.app.AppCompatActivity;
         import android.support.v7.widget.Toolbar;
+        import android.view.Menu;
+        import android.view.MenuItem;
         import android.view.View;
         import android.widget.AdapterView;
         import android.widget.ArrayAdapter;
@@ -30,7 +36,7 @@ package com.example.firebasesetup;
         import java.util.List;
 
 
-public class EPortal extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EPortal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
 
     private static final int CHOOSE_IMAGE = 101;
 
@@ -40,16 +46,33 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
     String scheduleId = new String();
     Schedule schedule;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_eportal);
+        setContentView(R.layout.activity_employee_portal);
         mAuth = FirebaseAuth.getInstance();
         databaseEmployees = FirebaseDatabase.getInstance().getReference("Employees");
         databaseSchedules = FirebaseDatabase.getInstance().getReference("Schedules");
 
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+
 
         final FirebaseUser user = mAuth.getCurrentUser();
         Query query = databaseSchedules.orderByChild("empl_id").equalTo(user.getEmail());
@@ -179,11 +202,15 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
                 String end = spinner3.getSelectedItem().toString();
                 int startTime = timeToInt(start);
                 int endTime = timeToInt(end);
+                if (!validHours(startTime, endTime))
+                {
+                    Toast.makeText(spinner.getContext(), "Incorrect Time Slot", Toast.LENGTH_LONG).show();
+                }
                 while (startTime < endTime){
                     databaseSchedules.child(scheduleId).child(day).child(Integer.toString(startTime)).setValue("True");
                     //availability[0] = availability[0].concat(startTime + ", ");
                     startTime += 30;
-                    if (startTime%100 == 60){startTime += 40;}
+                    if (newHour(startTime)){startTime += 40;}
 
                 }
                 updateDisplayedAvailability(day);
@@ -204,6 +231,10 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
                 String end = spinner3.getSelectedItem().toString();
                 int startTime = timeToInt(start);
                 int endTime = timeToInt(end);
+                if (startTime >= endTime)
+                {
+                    Toast.makeText(spinner.getContext(), "Incorrect Time Slot", Toast.LENGTH_LONG).show();
+                }
                 while (startTime < endTime){
                     databaseSchedules.child(scheduleId).child(day).child(Integer.toString(startTime)).setValue("False");
                     availability = availability.concat(startTime + ", ");
@@ -342,5 +373,85 @@ public class EPortal extends AppCompatActivity implements AdapterView.OnItemSele
         return intsToTime(Integer.valueOf(s));
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    //Commenting out this codes removes the "settings" icon in the top right
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.employee_portal, menu);
+//        return true;
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        //this should be EmployeeProfile but the page crashes, so temporarily using Manager's
+        if (id == R.id.Profile) {
+            Intent startIntent = new Intent(getApplicationContext(), EmployeeProfile.class);
+            startActivity(startIntent);
+
+        } else if (id == R.id.ViewEmployees) {
+
+        } else if (id == R.id.Logout) {
+
+            AppPreferences prefs = new AppPreferences(getApplicationContext());
+            prefs.setLoginPref(false);
+            prefs.setId(null);
+            prefs.setDb(null);
+            finish();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.About) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    public boolean validHours(int startTime, int endTime){
+        return (startTime < endTime);
+    }
+
+    public boolean newHour(int time){
+        return (time%100 == 60);
+    }
+
+    public boolean isAvailable(DataSnapshot snap){
+        return snap.getValue().equals("True");
+    }
 }
 

@@ -12,13 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
-public class ManagerProfile extends AppCompatActivity {
+public class EmployeeProfile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         TextView resetPW;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manager_profile);
+        setContentView(R.layout.activity_employee_profile);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

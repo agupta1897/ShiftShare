@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Pattern;
+
 
 public class EmployeeSetup extends AppCompatActivity {
 
@@ -119,7 +121,7 @@ public class EmployeeSetup extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
         String contactNumber = editTextContactNumber.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(name) ||  !TextUtils.isEmpty(email) || !TextUtils.isEmpty(password) || !TextUtils.isEmpty(contactNumber) )
+        if(isValidName(name) ||  isValidEmailAddress(email) || isValidPassword(password) || isValidPhoneNumber(contactNumber) )
         {
             databaseEmployees.addValueEventListener(valueEventListener);
             Intent next = new Intent(getApplicationContext(), Login.class);
@@ -168,4 +170,60 @@ public class EmployeeSetup extends AppCompatActivity {
 
         }
     };
+    public static boolean isNumber(String string) {
+        return string.matches("-?\\d+");
+    }
+
+    public boolean isValidPhoneNumber(String number)
+    {
+        if (number == null)
+        {
+            return false;
+        }
+
+        if (isNumber(number) && number.length()== 10)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+
+
+    public boolean isValidEmailAddress(String email){
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
+
+    public boolean isValidPassword(String password){
+
+        if (isEmptyPassword(password)){
+            return false;
+        }
+
+        if( password.length() <6)
+            return false;
+        else
+            return true;
+    }
+
+    public boolean isEmptyPassword(String password)
+    {
+        return password.isEmpty();
+    }
+
+    public boolean isValidName(String name)
+    {
+        return !name.isEmpty();
+    }
+
+
 }

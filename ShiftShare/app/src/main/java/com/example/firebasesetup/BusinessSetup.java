@@ -62,7 +62,9 @@ public class BusinessSetup extends AppCompatActivity {
                 TextUtils.isEmpty(bsn_street) ||
                 TextUtils.isEmpty(bsn_city) ||
                 TextUtils.isEmpty(bsn_state) ||
-                TextUtils.isEmpty(bsn_zip))
+                isValidStoreNumber(bsn_store_num)||
+                isValidZip(bsn_zip)
+            )
         {Toast.makeText(this, "There are required fields empty", Toast.LENGTH_LONG).show();}
         else{
             Manager manager = GlobalClass.getManager();
@@ -91,4 +93,22 @@ public class BusinessSetup extends AppCompatActivity {
             // startActivity(next);
         }
     }
+
+    public boolean isValidZip(String code)
+    {
+        if(!code.isEmpty())
+        return code.matches("^[0-9]{5}(?:-[0-9]{4})?$");
+        return false;
+    }
+
+    public boolean isValidStoreNumber (String id)
+    {
+        if(!id.isEmpty())
+            return id.matches("-?\\d+");
+        return false;
+    }
+
+
+
+
 }

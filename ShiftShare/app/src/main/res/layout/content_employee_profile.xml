@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ManagerProfile"
-    tools:showIn="@layout/activity_manager_profile">
+    tools:context=".EmployeeProfile"
+    tools:showIn="@layout/activity_employee_profile">
 
     <Button
         android:id="@+id/saveChanges"
@@ -62,7 +62,7 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Amber"
+        android:text="TestEmp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +93,7 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="manager123@mail.com"
+        android:text="emp@emp.com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +124,7 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="phone"
-        android:text="123456789"
+        android:text="2054352352"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
