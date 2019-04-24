@@ -62,8 +62,8 @@ public class BusinessSetup extends AppCompatActivity {
                 TextUtils.isEmpty(bsn_street) ||
                 TextUtils.isEmpty(bsn_city) ||
                 TextUtils.isEmpty(bsn_state) ||
-                isValidStoreNumber(bsn_store_num)||
-                isValidZip(bsn_zip)
+                !isValidStoreNumber(bsn_store_num)||
+                !isValidZip(bsn_zip)
             )
         {Toast.makeText(this, "There are required fields empty", Toast.LENGTH_LONG).show();}
         else{
@@ -98,14 +98,14 @@ public class BusinessSetup extends AppCompatActivity {
     {
         if(!code.isEmpty())
         return code.matches("^[0-9]{5}(?:-[0-9]{4})?$");
-        return false;
+        else return false;
     }
 
     public boolean isValidStoreNumber (String id)
     {
         if(!id.isEmpty())
-            return id.matches("-?\\d+");
-        return false;
+            return true;
+        else return false;
     }
 
 

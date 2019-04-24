@@ -1,11 +1,12 @@
 package com.example.firebasesetup;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 //import android.provider.ContactsContract;
 //import android.util.Log;
+import android.support.constraint.solver.widgets.Snapshot;
+import android.text.Layout;
+import android.util.Log;
 import android.util.Patterns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.security.PrivateKey;
-import java.util.regex.Pattern;
+import java.util.prefs.PreferenceChangeEvent;
 
 
 public class Login extends AppCompatActivity {
@@ -44,12 +45,12 @@ public class Login extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference dbManager;
     DatabaseReference dbEmployee;
-    Manager manager;
-    Employee employee;
-
- //   private List<Manager> managerList;
+    android.support.constraint.ConstraintLayout page;
+    //   private List<Manager> managerList;
     EditText editTextEmail, editTextPassword, editTextSignup;
     //ProgressBar progressBar;
+    Manager manager;
+    Employee employee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,9 @@ public class Login extends AppCompatActivity {
         editTextEmail = (EditText) findViewById(R.id.username);
         editTextPassword = (EditText) findViewById(R.id.password);
         editTextSignup = (EditText) findViewById(R.id.textSignup);
+        page = findViewById(R.id.page);
         editTextSignup.setClickable(true);
+        editTextSignup.setFocusable(false);
 //        managerList = new ArrayList<>();
 
         if(preferences.getLoginPref()){
@@ -71,12 +74,11 @@ public class Login extends AppCompatActivity {
             query.addListenerForSingleValueEvent(valueEventListener);
         }
 
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userLogin();
-             //   Intent startIntent = new Intent(getApplicationContext(), Login.class);
+                //   Intent startIntent = new Intent(getApplicationContext(), Login.class);
                 //startActivity(startIntent);
             }
         });
@@ -98,31 +100,31 @@ public class Login extends AppCompatActivity {
         final String email = editTextEmail.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
-        if (isEmptyEmailAddress(email)) {
+        if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
             editTextEmail.requestFocus();
             return;
         }
 
-        if (!isValidEmailAddress(email)) {
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please enter a valid email");
             editTextEmail.requestFocus();
             return;
         }
 
-        if (isEmptyPassword(password)) {
+        if (password.isEmpty()) {
             editTextPassword.setError("Password is required");
             editTextPassword.requestFocus();
             return;
         }
 
-        if (!isValidPassword(password)) {
-            editTextPassword.setError("Minimum lenght of password should be 6");
+        if (password.length() < 6) {
+            editTextPassword.setError("Minimum length of password should be 6");
             editTextPassword.requestFocus();
             return;
         }
 
-       // progressBar.setVisibility(View.VISIBLE);
+        // progressBar.setVisibility(View.VISIBLE);
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -140,36 +142,6 @@ public class Login extends AppCompatActivity {
         });
     }
 
-
-    public boolean isValidEmailAddress(String email){
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
-                "[a-zA-Z0-9_+&*-]+)*@" +
-                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                "A-Z]{2,7}$";
-
-        Pattern pat = Pattern.compile(emailRegex);
-        if (email == null)
-            return false;
-        return pat.matcher(email).matches();
-    }
-
-    public boolean isEmptyEmailAddress(String email)
-    {
-        return email.isEmpty();
-    }
-
-    public boolean isValidPassword(String password){
-
-        if( password.length() <6)
-            return false;
-        else
-            return true;
-    }
-
-    public boolean isEmptyPassword(String password)
-    {
-        return password.isEmpty();
-    }
 
 
     public void isManager( String email)
@@ -189,13 +161,23 @@ public class Login extends AppCompatActivity {
 //            managerList.clear();
             if (dataSnapshot.exists()) {
 
-                preferences.setId(dataSnapshot.getKey());
+                Toast.makeText(getApplicationContext(), "SUCCESSFUL Manager LOGIN!!", Toast.LENGTH_SHORT).show();
+                if(preferences.getLoginPref()){
+                    manager = dataSnapshot.child(preferences.getId()).getValue(Manager.class);
+                }
+                else{
+                    String email = editTextEmail.getText().toString();
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        manager = snapshot.getValue(Manager.class);
+                        if(manager.getEmail().equals(email)) break;
+                    }
+                }
+                preferences.setId(manager.getId());
                 preferences.setDb("managers");
                 preferences.setLoginPref(true);
-                manager = dataSnapshot.child(preferences.getId()).getValue(Manager.class);
                 GlobalClass.setManager(manager);
-                Toast.makeText(getApplicationContext(), "SUCCESSFUL " + manager.getName() + " LOGIN!!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent( getApplicationContext(), BusinessSelect.class);
+                System.out.println("Shared Prefs ID = " + preferences.getId());
                 startActivity(intent);
 
                 //************ This is a working example of how to capture query results into array list**********/////////////////////
@@ -211,12 +193,47 @@ public class Login extends AppCompatActivity {
             else
             {
                 Toast.makeText(getApplicationContext(), "SUCCESSFUL Employee LOGIN!!", Toast.LENGTH_SHORT).show();
-                preferences.setId(dataSnapshot.getKey());
+                dbEmployee = FirebaseDatabase.getInstance().getReference("Employees");
+                if(preferences.getLoginPref()){
+                    final String id = preferences.getId();
+                    dbEmployee.orderByChild("id").equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                employee = snapshot.getValue(Employee.class);
+                                if(employee.getId().equals(id)) break;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                else{
+                    final String email = editTextEmail.getText().toString();
+                    dbEmployee.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                employee = snapshot.getValue(Employee.class);
+                                if(employee.getEmail().equals(email)) break;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+                System.out.println("Employee ID: " + employee.getId());
+                preferences.setId(employee.getId());
                 preferences.setDb("Employees");
                 preferences.setLoginPref(true);
-                dbEmployee = FirebaseDatabase.getInstance().getReference("Employees");
-                Query query = dbEmployee.orderByChild("id").equalTo(preferences.getId());
-                query.addListenerForSingleValueEvent(employeeListener);
+                GlobalClass.setEmployee(employee);
                 Intent intent = new Intent( getApplicationContext(), EPortal.class);
                 startActivity(intent);
             }
@@ -228,20 +245,5 @@ public class Login extends AppCompatActivity {
         }
     };
 
-    ValueEventListener employeeListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-            if(dataSnapshot.exists()){
-                dataSnapshot.getValue(Employee.class);
-                GlobalClass.setEmployee(employee);
-            }
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
-    };
 
 }

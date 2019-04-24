@@ -68,7 +68,9 @@ public class MainActivity extends AppCompatActivity {
         editTextSignup.setFocusable(false);
 //        managerList = new ArrayList<>();
 
-        if(preferences.getLoginPref()){
+        System.out.println("Login: " + preferences.getLoginPref());
+        if(preferences.getLoginPref() == true){
+            System.out.println("DB: " + preferences.getDb() + " ID: " + preferences.getId());
             dbManager = FirebaseDatabase.getInstance().getReference("managers");
             Query query = dbManager.orderByChild("id").equalTo(preferences.getId());
             query.addListenerForSingleValueEvent(valueEventListener);
@@ -243,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                 }
-
             }
         }
 
