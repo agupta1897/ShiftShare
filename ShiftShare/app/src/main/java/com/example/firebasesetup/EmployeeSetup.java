@@ -95,7 +95,7 @@ public class EmployeeSetup extends AppCompatActivity {
                 //progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
 
-                    Toast.makeText(getApplicationContext(), "You are successfully registered", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "You are successfully registered", Toast.LENGTH_SHORT).show();
 
                     addEmployee();
                     finish();
@@ -124,7 +124,7 @@ public class EmployeeSetup extends AppCompatActivity {
         if(isValidName(name) ||  isValidEmailAddress(email) || isValidPassword(password) || isValidPhoneNumber(contactNumber) )
         {
             databaseEmployees.addValueEventListener(valueEventListener);
-            Intent next = new Intent(getApplicationContext(), Login.class);
+            Intent next = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(next);
         }
         else

@@ -87,7 +87,7 @@ public class BusinessSetup extends AppCompatActivity {
             //databaseBusiness.child(id).setValue(bsn); //overwrites the old business object at the id with a new one with updated information !!NOT EFFICIENT!!
             /*** END TESTING ***/
 
-            Intent next = new Intent(getApplicationContext(), Login.class);
+            Intent next = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(next);
             // Intent next = new Intent(getApplicationContext(), ManagerPortal.class);
             // startActivity(next);
