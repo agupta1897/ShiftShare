@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 preferences.setDb("managers");
                 preferences.setLoginPref(true);
                 GlobalClass.setManager(manager);
-                Intent intent = new Intent( getApplicationContext(), BusinessSelect.class);
+                Intent intent = new Intent( getApplicationContext(), ManagerPortal.class);
                 System.out.println("Shared Prefs ID = " + preferences.getId());
                 startActivity(intent);
 
@@ -203,6 +203,13 @@ public class MainActivity extends AppCompatActivity {
                                 employee = snapshot.getValue(Employee.class);
                                 if(employee.getId().equals(id)) break;
                             }
+
+                            preferences.setId(employee.getId());
+                            preferences.setDb("Employees");
+                            preferences.setLoginPref(true);
+                            GlobalClass.setEmployee(employee);
+                            Intent intent = new Intent( getApplicationContext(), EPortal.class);
+                            startActivity(intent);
                         }
 
                         @Override
@@ -220,6 +227,13 @@ public class MainActivity extends AppCompatActivity {
                                 employee = snapshot.getValue(Employee.class);
                                 if(employee.getEmail().equals(email)) break;
                             }
+
+                            preferences.setId(employee.getId());
+                            preferences.setDb("Employees");
+                            preferences.setLoginPref(true);
+                            GlobalClass.setEmployee(employee);
+                            Intent intent = new Intent( getApplicationContext(), EPortal.class);
+                            startActivity(intent);
                         }
 
                         @Override
@@ -229,12 +243,7 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                 }
-                preferences.setId(employee.getId());
-                preferences.setDb("Employees");
-                preferences.setLoginPref(true);
-                GlobalClass.setEmployee(employee);
-                Intent intent = new Intent( getApplicationContext(), EPortal.class);
-                startActivity(intent);
+
             }
         }
 
