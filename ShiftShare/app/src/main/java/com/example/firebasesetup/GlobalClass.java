@@ -34,9 +34,14 @@ public class GlobalClass extends Application {
 
     public static void clearGlobal(){
 
+        /*
         business = new Business();
         manager = new Manager();
         employee = new Employee();
+        */
+        business = null;
+        employee = null;
+        manager = null;
 
     }
 
