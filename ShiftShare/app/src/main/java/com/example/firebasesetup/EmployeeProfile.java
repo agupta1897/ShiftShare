@@ -10,9 +10,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class EmployeeProfile extends AppCompatActivity {
+
+    DatabaseReference databaseEmployees;
+    FirebaseAuth mAuth;
+    EditText name;
+    EditText email;
+    EditText phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,22 @@ public class EmployeeProfile extends AppCompatActivity {
         resetPW.setClickable(true);
         resetPW.setFocusable(false);
 
+        mAuth = FirebaseAuth.getInstance();
+        databaseEmployees = FirebaseDatabase.getInstance().getReference("Employees");
+
+        name = findViewById(R.id.editName);
+        email = findViewById(R.id.editEmail);
+        phone = findViewById(R.id.editPhone);
+
+        final FirebaseUser user = mAuth.getCurrentUser();
+        final AppPreferences prefs = new AppPreferences(getApplicationContext());
+
+
+        //i know i could get the data with a query, but i doubt thats the best way so i didnt implement it
+        name.setText("User object has no name");
+        email.setText(user.getEmail());
+        phone.setText("User object has no phone");
+
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -38,10 +64,15 @@ public class EmployeeProfile extends AppCompatActivity {
             }
         });
 
-        //non functioning
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                databaseEmployees.child(prefs.getId()).child("name").setValue(name.getText().toString().trim());
+
+                //commented out while Name and Phone arent working
+//                databaseEmployees.child(prefs.getId()).child("email").setValue(email.getText().toString().trim());
+//                databaseEmployees.child(prefs.getId()).child("number").setValue(phone.getText().toString().trim());
+
                 finish();
 
             }

@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="Edit Profile" />
         <item
-            android:id="@+id/ViewEmployees"
+            android:id="@+id/BSetup"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="View Employees" />
+            android:title="Setup Business" />
     </group>
 
     <item android:title="Other">

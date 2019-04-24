@@ -77,6 +77,8 @@ public class ManagerPortal extends AppCompatActivity
         recyclerView.setAdapter(adapter);
         dbSchedules = FirebaseDatabase.getInstance().getReference("Schedules");
 
+
+
         adapter.setOnItemClickListener(new EmployeeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -445,7 +447,9 @@ public class ManagerPortal extends AppCompatActivity
             Intent startIntent = new Intent(getApplicationContext(), ManagerProfile.class);
             startActivity(startIntent);
 
-        } else if (id == R.id.ViewEmployees) {
+        } else if (id == R.id.BSetup) {
+            Intent startIntent = new Intent(getApplicationContext(), BusinessSetup.class);
+            startActivity(startIntent);
 
         } else if (id == R.id.Logout) {
 

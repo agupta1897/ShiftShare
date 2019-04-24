@@ -34,6 +34,12 @@ public class AppPreferences {
 
     }
 
+//    public String getPhone(){
+//
+//        return preferences.getString("number", null);
+//
+//    }
+
     public void setLoginPref(Boolean login){
 
         SharedPreferences.Editor editor = preferences.edit();

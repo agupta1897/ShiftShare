@@ -11,8 +11,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class ManagerProfile extends AppCompatActivity {
+
+
+    DatabaseReference databaseManagers;
+    FirebaseAuth mAuth;
+    EditText name;
+    EditText email;
+    EditText phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +40,20 @@ public class ManagerProfile extends AppCompatActivity {
         resetPW.setClickable(true);
         resetPW.setFocusable(false);
 
+        mAuth = FirebaseAuth.getInstance();
+        databaseManagers = FirebaseDatabase.getInstance().getReference("Managers");
 
+        name = findViewById(R.id.editName);
+        email = findViewById(R.id.editEmail);
+        phone = findViewById(R.id.editPhone);
+
+        final FirebaseUser user = mAuth.getCurrentUser();
+        final AppPreferences prefs = new AppPreferences(getApplicationContext());
+
+        //name.setText(pref.getString("id", ""));
+        name.setText("User object has no name");
+        email.setText(user.getEmail());
+        phone.setText("User object has no phone");
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,11 +62,15 @@ public class ManagerProfile extends AppCompatActivity {
 
             }
         });
-
-        //non functioning
+        
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                databaseManagers.child(prefs.getId()).child("name").setValue(name.getText().toString().trim());
+
+                //commented out while Name and Phone arent working
+//                databaseManagers.child(prefs.getId()).child("email").setValue(email.getText().toString().trim());
+//                databaseManagers.child(prefs.getId()).child("number").setValue(phone.getText().toString().trim());
                 finish();
 
             }

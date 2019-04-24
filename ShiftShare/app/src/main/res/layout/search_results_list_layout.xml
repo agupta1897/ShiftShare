@@ -82,6 +82,18 @@
                 android:padding="4dp"
                 android:text="Text" />
 
+            <Button
+                android:id="@+id/btnCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="1dp"
+                android:layout_toRightOf="@id/textViewEmail"
+                android:drawableRight="@drawable/ic_menu_share"
+                android:padding="4dp"
+                android:text="Call" />
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

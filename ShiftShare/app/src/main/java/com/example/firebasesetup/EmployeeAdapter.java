@@ -80,7 +80,7 @@ public class EmployeeAdapter extends  RecyclerView.Adapter<EmployeeAdapter.Emplo
     public class EmployeeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textViewEmail, textViewName, textViewRating, textViewNumber;
        ImageView imageView;
-       Button btnConnect;
+       Button btnConnect; Button btnCall;
 
 
 
@@ -93,15 +93,29 @@ public class EmployeeAdapter extends  RecyclerView.Adapter<EmployeeAdapter.Emplo
             textViewNumber = itemView.findViewById(R.id.textViewNumber);
             imageView = itemView.findViewById(R.id.imageView);
             btnConnect = itemView.findViewById(R.id.btnConnect);
+            btnCall = itemView.findViewById(R.id.btnCall);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            btnConnect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // Triggers click upwards to the adapter on click
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(itemView, position);
+                            listener.onItemClick(btnConnect, position);
+                        }
+                    }
+                }
+            });
+
+            btnCall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Triggers click upwards to the adapter on click
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(btnCall, position);
                         }
                     }
                 }
