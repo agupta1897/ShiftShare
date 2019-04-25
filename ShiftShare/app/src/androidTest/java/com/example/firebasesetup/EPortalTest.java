@@ -60,6 +60,11 @@ public class EPortalTest extends ActivityInstrumentationTestCase2 {
         assertNotNull(btn);
     }
 
+    public void testClearButton(){
+        Button btn = (Button)getActivity().findViewById(R.id.btn_clear);
+        assertNotNull(btn);
+    }
+
 
     /* END OF TESTS */
 
