@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 preferences.setDb("managers");
                 preferences.setLoginPref(true);
                 GlobalClass.setManager(manager);
-                Intent intent = new Intent( getApplicationContext(), BusinessSelect.class);
+                Intent intent = new Intent( getApplicationContext(), ManagerPortal.class);
                 System.out.println("Shared Prefs ID = " + preferences.getId());
                 startActivity(intent);
 

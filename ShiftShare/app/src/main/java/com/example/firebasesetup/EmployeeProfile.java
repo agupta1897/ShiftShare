@@ -2,6 +2,9 @@ package com.example.firebasesetup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Sampler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class EmployeeProfile extends AppCompatActivity {
@@ -23,6 +31,8 @@ public class EmployeeProfile extends AppCompatActivity {
     EditText name;
     EditText email;
     EditText phone;
+    Employee emp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +50,6 @@ public class EmployeeProfile extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         databaseEmployees = FirebaseDatabase.getInstance().getReference("Employees");
-
         name = findViewById(R.id.editName);
         email = findViewById(R.id.editEmail);
         phone = findViewById(R.id.editPhone);
@@ -49,12 +58,12 @@ public class EmployeeProfile extends AppCompatActivity {
         final AppPreferences prefs = new AppPreferences(getApplicationContext());
 
 
-        //i know i could get the data with a query, but i doubt thats the best way so i didnt implement it
-        name.setText("User object has no name");
+        Query query = FirebaseDatabase.getInstance().getReference("managers")
+                .orderByChild("name")
+                .equalTo(user.getEmail());
+        query.addListenerForSingleValueEvent(valueEventListener);
+
         email.setText(user.getEmail());
-        phone.setText("User object has no phone");
-
-
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,10 +77,8 @@ public class EmployeeProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 databaseEmployees.child(prefs.getId()).child("name").setValue(name.getText().toString().trim());
-
-                //commented out while Name and Phone arent working
-//                databaseEmployees.child(prefs.getId()).child("email").setValue(email.getText().toString().trim());
-//                databaseEmployees.child(prefs.getId()).child("number").setValue(phone.getText().toString().trim());
+                databaseEmployees.child(prefs.getId()).child("email").setValue(email.getText().toString().trim());
+                databaseEmployees.child(prefs.getId()).child("number").setValue(phone.getText().toString().trim());
 
                 finish();
 
@@ -88,5 +95,21 @@ public class EmployeeProfile extends AppCompatActivity {
         });
 
     }
+
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                emp = snapshot.getValue(Employee.class);
+                name.setText(emp.getName());
+                phone.setText(emp.getEmail());
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
 }
