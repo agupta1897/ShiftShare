@@ -34,4 +34,16 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
+
+
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:2.2.2'
+    androidTestImplementation 'com.android.support.test:rules:0.5'
+    androidTestImplementation 'com.android.support.test:runner:0.5'
+
+}
+
+configurations.all {
+    resolutionStrategy {
+        forcedModules = ['com.android.support:support-annotations:25.1.0']
+    }
 }

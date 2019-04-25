@@ -68,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
         editTextSignup.setFocusable(false);
 //        managerList = new ArrayList<>();
 
-        System.out.println("Login: " + preferences.getLoginPref());
+
         if(preferences.getLoginPref() == true){
-            System.out.println("DB: " + preferences.getDb() + " ID: " + preferences.getId());
             dbManager = FirebaseDatabase.getInstance().getReference("managers");
             Query query = dbManager.orderByChild("id").equalTo(preferences.getId());
             query.addListenerForSingleValueEvent(valueEventListener);
@@ -179,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
                 preferences.setLoginPref(true);
                 GlobalClass.setManager(manager);
                 Intent intent = new Intent( getApplicationContext(), ManagerPortal.class);
-                System.out.println("Shared Prefs ID = " + preferences.getId());
                 startActivity(intent);
 
                 //************ This is a working example of how to capture query results into array list**********/////////////////////
