@@ -185,6 +185,29 @@ public class AddEmployeeTest {
                                 1),
                         isDisplayed()));
         appCompatButton2.perform(click());
+
+
+        appCompatImageButton = onView(
+                allOf(withContentDescription("Open navigation drawer"),
+                        childAtPosition(
+                                allOf(withId(R.id.toolbar),
+                                        childAtPosition(
+                                                withId(R.id.appBarLayout),
+                                                0)),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+
+        navigationMenuItemView = onView(
+                allOf(childAtPosition(
+                        allOf(withId(R.id.design_navigation_view),
+                                childAtPosition(
+                                        withId(R.id.nav_view),
+                                        0)),
+                        6),
+                        isDisplayed()));
+        navigationMenuItemView.perform(click());
+
     }
 
     private static Matcher<View> childAtPosition(
