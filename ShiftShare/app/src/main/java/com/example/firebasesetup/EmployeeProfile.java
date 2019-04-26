@@ -58,8 +58,8 @@ public class EmployeeProfile extends AppCompatActivity {
         final AppPreferences prefs = new AppPreferences(getApplicationContext());
 
 
-        Query query = FirebaseDatabase.getInstance().getReference("managers")
-                .orderByChild("name")
+        Query query = FirebaseDatabase.getInstance().getReference("Employees")
+                .orderByChild("email")
                 .equalTo(user.getEmail());
         query.addListenerForSingleValueEvent(valueEventListener);
 
@@ -102,7 +102,7 @@ public class EmployeeProfile extends AppCompatActivity {
             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                 emp = snapshot.getValue(Employee.class);
                 name.setText(emp.getName());
-                phone.setText(emp.getEmail());
+                phone.setText(emp.getNumber());
             }
         }
 

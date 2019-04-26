@@ -88,7 +88,7 @@ public class BusinessSelect extends AppCompatActivity {
                 Business business = businessList.get(position);
                 GlobalClass.setBusiness(business);
                 System.out.println("Position " + position + ": ID " + business.getId());
-                Intent intent = new Intent(getApplicationContext(), ManagerPortal.class);
+                Intent intent = new Intent(getApplicationContext(), EmployeeCreate.class);
                 startActivity(intent);
             }
         });

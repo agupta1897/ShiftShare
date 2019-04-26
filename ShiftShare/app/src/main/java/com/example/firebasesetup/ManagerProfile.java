@@ -47,7 +47,7 @@ public class ManagerProfile extends AppCompatActivity {
         resetPW.setFocusable(false);
 
         mAuth = FirebaseAuth.getInstance();
-        databaseManagers = FirebaseDatabase.getInstance().getReference("Managers");
+        databaseManagers = FirebaseDatabase.getInstance().getReference("managers");
 
         name = findViewById(R.id.editName);
         email = findViewById(R.id.editEmail);
@@ -57,7 +57,7 @@ public class ManagerProfile extends AppCompatActivity {
         final AppPreferences prefs = new AppPreferences(getApplicationContext());
 
         Query query = FirebaseDatabase.getInstance().getReference("managers")
-                .orderByChild("name")
+                .orderByChild("email")
                 .equalTo(user.getEmail());
         query.addListenerForSingleValueEvent(valueEventListener);
 
@@ -75,10 +75,9 @@ public class ManagerProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 databaseManagers.child(prefs.getId()).child("name").setValue(name.getText().toString().trim());
+                databaseManagers.child(prefs.getId()).child("email").setValue(email.getText().toString().trim());
+                databaseManagers.child(prefs.getId()).child("number").setValue(phone.getText().toString().trim());
 
-                //commented out while Name and Phone arent working
-//                databaseManagers.child(prefs.getId()).child("email").setValue(email.getText().toString().trim());
-//                databaseManagers.child(prefs.getId()).child("number").setValue(phone.getText().toString().trim());
                 finish();
 
             }
@@ -101,7 +100,7 @@ public class ManagerProfile extends AppCompatActivity {
             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                 man = snapshot.getValue(Manager.class);
                 name.setText(man.getName());
-                phone.setText(man.getEmail());
+                phone.setText(man.getContactNumber());
             }
         }
 

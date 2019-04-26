@@ -475,7 +475,7 @@ public class ManagerPortal extends AppCompatActivity
 
         } else if (id == R.id.AddEmployee){
 
-            Intent intent = new Intent(getApplicationContext(), EmployeeCreate.class);
+            Intent intent = new Intent(getApplicationContext(), BusinessSelect.class);
             startActivity(intent);
 
         }
